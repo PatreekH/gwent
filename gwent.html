@@ -855,9 +855,14 @@
 				$('#player-hand').append('<img class="card" data-id="'+i+'" src="'+shuffledDeck[i].img+'">');
 			};
 
-			shuffledDeck.splice(0, 8);
+			shuffledDeck.splice(0, 10);
 
 		};
+
+		function shuffle(deck) {
+			for(var j, x, i = deck.length; i; j = parseInt(Math.random() * i), x = deck[--i], deck[i] = deck[j], deck[j] = x);
+			return deck;
+		};		
 
 		var pregameSelect = false;
 		var swaps = 0;
@@ -941,8 +946,10 @@
 			if(pregameSelect){
 
 				playerHand.splice(cardId, 1);
+				console.log(shuffledDeck);
 				playerHand.push(shuffledDeck[0]);
 				shuffledDeck.splice(0, 1);
+				console.log(shuffledDeck);
 				swaps--;
 				$('#swap-counter').html(swaps);
 				if(swaps == 0){
@@ -1231,8 +1238,10 @@
 						};
 
 						if(realAtk == highestRowNum){
-							currentGameScore[i].graveyard.push(gameboard[i][ii][iii]);
-							gameboard[i][ii].splice(iii, 1);
+							if(gameboard[i][ii][iii].hero != 1){
+								currentGameScore[i].graveyard.push(gameboard[i][ii][iii]);
+								gameboard[i][ii].splice(iii, 1);
+							};
 						};
 
 					};
@@ -1760,11 +1769,6 @@
 
 			nurse = '';
 
-		};
-
-		function shuffle(deck) {
-			for(var j, x, i = deck.length; i; j = parseInt(Math.random() * i), x = deck[--i], deck[i] = deck[j], deck[j] = x);
-			return deck;
 		};
 
 		var p1Pass = false;
