@@ -1,0 +1,2623 @@
+<html>
+	<head>
+		<title>Gwent</title>
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<style>
+			body{
+				background-color: black;
+			}
+			#block{
+				bottom: -150px;
+				z-index: 8;
+				position: absolute;
+				width: 100%;
+				height: 154px;
+				display: none;
+			}
+			#king-block{
+			    top: 51%;
+			    left: 86%;
+			    z-index: 8;
+			    position: absolute;
+			    width: 125px;
+			    height: 120px;
+				display: none;
+			}
+			#pass-block{
+				top: 65%;
+				left: 1%;
+				z-index: 8;
+				position: absolute;
+				width: 180px;
+				height: 120px;
+				display: none;
+			}			
+			#gwent-board{
+				background-image: url('./gwentboard.jpg');
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				height: 615px;
+			}
+
+			.selecting{
+				border: yellow solid 3px;
+			}
+
+			#weather{
+				height: 187px;
+				width: 105px;
+				position: absolute;
+				top: 35%;
+				left: 1.5%;
+			}
+
+			.totals{
+				padding-top: 9px;
+				text-align: center;
+				height: 50px;
+				width: 100px;
+				font-weight: 700;
+				font-size: 20px;
+				background-color: tan;
+				position: absolute;
+				border: solid black 3px;
+				left: 13%;
+			}
+			#p1total{
+				top: 35%;
+			}
+			#p2total{
+				top: 57%;
+			}
+
+			.row-score{
+				padding-top: 7px;
+				text-align: center;
+    			font-weight: 700;				
+				z-index: +2;
+				position: relative;
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				background-color: tan;
+				border: solid 2px black;
+				left: 32%;
+			}
+			#p11{
+				top: 38%;
+			}
+			#p12{
+				top: 16%;	
+			}
+			#p13{
+				top: -6%;
+			}
+			#p21{
+				top: 36%;				
+			}
+			#p22{
+				top: 46%;				
+			}
+			#p23{
+				top: 55%;				
+			}
+
+			.battle-row{
+				position: absolute;
+				height: 92px;
+				width: 396px;
+				left: 34%;
+			}
+			.my-row, .my-total{
+				background-color: #c78d3f;
+			}
+
+			#p1b1{
+				top: 34%;
+			}
+			#p1b2{
+				top: 18.5%;
+			}
+			#p1b3{
+				top: 2.5%;
+			}
+			#p2b1{
+				top: 51%;
+			}
+			#p2b2{
+				top: 67%;
+			}
+			#p2b3{
+				top: 83%;
+			}
+
+			.opp-display-div{
+				z-index: +5;
+				height: 300px;
+				width: 220px;
+				position: absolute;
+				left: 50%;
+				top: 25%;
+				transform: translateX(-50%);
+			}
+			.result-display-div{
+				width: 400px;
+				height: 400px;
+			}
+			.plus1{
+				color: lime;
+			}
+			#opp-display{
+				font-weight: 700;
+			    text-align: center;
+			    padding: 15px;
+			    background-color: tan;
+			    border: solid black 3px;
+			    font-size: 21px;					
+			}
+			#opp-preview{
+				height: 300px;
+    			width: 220px;
+			}
+			#opp-healed-preview{
+				width: 75px;
+				height: 100px;
+				border: red solid 3px;
+				float: left;		
+			}
+			.healed-preview-div{
+				float: left;
+			}
+			.healed-title{
+				margin-right: 25px;
+				margin-top: 30px;
+				margin-left: 25px;
+				color: red;
+				float: left;
+				font-size: 20px;
+				font-weight: 700;
+			}
+
+			#pregame-msg-div{
+				z-index: 4;
+				position: absolute;
+				left: 53%;
+				top: 45%;
+				transform: translateX(-50%);				
+			}
+
+			#pregame-select-div{
+				z-index: 4;
+				position: absolute;
+				left: 50%;
+				top: 32%;
+				transform: translateX(-50%);				
+			}
+			#pregame-select{
+				font-weight: 700;
+			    text-align: center;
+			    padding: 15px;
+			    background-color: tan;
+			    border: solid black 3px;
+			    font-size: 21px;
+			    width: 300px;				
+			}
+
+			#pass-select-div{
+				z-index: 4;
+				position: absolute;
+				left: 50%;
+				top: 32%;
+				transform: translateX(-50%);					
+			}
+			#pass-select{
+				font-weight: 700;
+			    text-align: center;
+			    padding: 15px;
+			    background-color: tan;
+			    border: solid black 3px;
+			    font-size: 21px;
+			    width: 300px;				
+			}
+
+			#horn-select-div{
+				z-index: +7;
+				position: absolute;
+				left: 50%;
+				top: 32%;
+				transform: translateX(-50%);			
+			}
+			#horn-select{
+				font-weight: 700;
+			    text-align: center;
+			    padding-top: 20px;
+			    background-color: tan;
+			    border: solid black 3px;
+			    font-size: 24px;
+			    height: 75px;
+			    width: 300px;
+			}
+			.horns{
+				position: absolute;
+				width: 75px;
+				height: 100px;
+			}
+			#p1hornb1{
+				top: 34%;
+				left: 25%;
+			}
+			#p1hornb2{
+				top: 18%;
+				left: 25%;
+			}
+			#p1hornb3{
+				top: 2%;
+				left: 25%;
+			}
+			#p2hornb1{
+				top: 50%;
+				left: 25%;
+			}
+			#p2hornb2{
+				top: 66%;
+				left: 25%;
+			}
+			#p2hornb3{
+				top: 83%;
+				left: 25%;
+			}
+
+
+			.gems{
+				-webkit-transition: all 1s ease;
+				transition: all 1s ease;
+				position: relative;
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				background-color: #8B0000;
+				border: dashed 1px red;
+			}
+			#p1gem1{
+				top: -32%;
+				left: 84%;
+			}
+			#p1gem2{
+				top: -38.5%;
+				left: 94.25%;
+			}
+			#p2gem1{
+				top: 35%;
+				left: 1.5%;				
+			}
+			#p2gem2{
+				top: 28.5%;
+				left: 12%;				
+			}
+			.deadgem{
+				background: rgba(0, 0, 0,0);
+			}
+
+
+			#player-hand{
+				text-align: center;
+			}
+			.card{
+				border-radius: 5px;
+				height: 150px;
+				width: 75px;
+				float: left;
+				margin-right: 5px;
+				background-color: white;
+			}
+
+			.selected{
+				height: 300px;
+				width: 150px;		
+			}
+			.selected-div{
+				z-index: +5;
+				height: 300px;
+				width: 150px;
+				position: absolute;
+				left: 50%;
+				top: 25%;
+				transform: translateX(-50%);		
+			}
+
+			#p1deck{
+				top: 2%;
+				left: 2%;
+			}
+			#p2deck{
+				top: 82%;
+				left: 91%;
+			}
+			.decks{
+				color: white;
+				font-size: 24px;
+				font-weight: 700;
+				text-align: center;
+				padding-top: 6px;
+				padding-left: 32px;
+				position: absolute;
+				height: 100px;
+				width: 75px;
+				background-image: url('./cards/carddeck.png');
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+			}
+
+			#p1leader{
+				top: 32%;
+				left: 87%;
+			}
+			#p2leader{
+				top: 52%;
+				left: 87%;
+			}
+			.fade{
+				opacity: 0.5;
+			}
+			.leaders{
+				background-image: url('./cards/leader.png');
+				background-repeat: no-repeat;
+				background-size: 100% 100%;				
+				position: absolute;
+				height: 100px;
+				width: 110px;
+				background-color: white;
+				border: black solid 3px;
+			}
+
+			#pass-btn{
+				top: 71%;
+				position: absolute;
+				width: 167px;
+				height: 50px;
+				font-size: 22px;
+				font-weight: 700;
+				padding-top: 9px;
+				color: white;		
+			}
+			.passed{
+				height: 50px;
+			    width: 50px;
+			    position: absolute;
+			    left: 77% !important;
+			    color: white;
+			    font-size: 25px;
+			    background-image: none !important;
+			}
+			.passing{
+				width: 100%;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				height: 56px;
+				font-weight: 700;
+				font-size: 20px;				
+			}
+
+			#confirm-play{
+				width: 100%;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				height: 56px;
+				font-weight: 700;
+				font-size: 20px;				
+			}
+
+			#confirm-play-leader{
+				width: 100%;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				height: 56px;
+				font-weight: 700;
+				font-size: 20px;				
+			}
+
+			#cancel-play{
+				width: 100%;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				height: 56px;
+				font-weight: 700;
+				font-size: 20px;				
+			}
+
+			.played-card{
+				border-radius: 5px;
+				height: 88px;
+				width: 69px;
+				float: left;
+				margin-right: -18px;
+				background-color: white;				
+			}
+			.weather-card{
+				border-radius: 5px;
+				height: 62px;
+				width: 105px;				
+			}
+			.graveyard-cards{
+				height: 300px;
+				width: 150px;
+				float: left;
+			}
+
+			#graveyard-block{
+				z-index: 7;
+				height: 200%;
+				width: 100%;
+				top: 5%;
+				position: absolute;
+			}
+
+			#graveyard-heal{
+				z-index: +7;
+				position: relative;
+				left: 50%;
+				top: 7%;
+				transform: translateX(-50%);
+			}
+			#graveyard-select-title{
+				font-weight: 700;
+				text-align: center;
+				padding-top: 20px;
+				background-color: tan;
+				border: solid black 3px;
+				font-size: 24px;
+				height: 75px;
+			}
+
+			.graveyards{
+				position: absolute;
+				height: 100px;
+				width: 75px;				
+			}
+
+			#graveyard1{
+				left: 11%;
+				top: 2%;
+			}
+			#graveyard2{
+				left: 81%;
+				top: 82%;				
+			}
+
+			.frost{
+				background-color: cyan;
+				opacity: 0.5;
+			}
+			.fog{
+				background-color: lightgrey;
+				opacity: 0.5;
+			}
+			.rain{
+				background-color: grey;
+				opacity: 0.5;
+			}
+			.spec-active{
+				border: solid gold 3px;
+			}
+			
+			.info{
+				position: absolute;
+				width: 111px;
+				height: 50px;
+				font-size: 17px;
+				font-weight: 700;
+				color: gold;
+				left: 87%;
+				text-align: center;			
+			}
+
+			.info span{
+				color: white;
+			}
+
+			#p1info{
+				top: 21%;
+			}
+			#p2info{
+				top: 71%;
+			}
+
+			#swap-counter{
+				color: red;
+			}
+			
+			.arrow-spots{
+				height: 50px;
+				width: 50px;
+				position: absolute;
+				left: 80%;
+				background-image: url("./cards/arrow.png");
+				background-repeat: no-repeat;
+				background-size: 100% 100%;				
+			}
+			#arrow-spot0{
+				display: none;
+				top: 36%;
+			}
+			#arrow-spot1{
+				display: none;
+				top: 56%;
+			}
+
+			#skip-swap{
+				font-weight: 700;
+			}
+
+			#winner-name{
+				font-weight: 700;
+				font-size: 60px;
+				text-align: center;
+				color: white;
+			}
+			.end-game-div{
+				position: absolute;
+				left: 50%;
+				top: 25%;
+				transform: translateX(-50%);				
+			}
+			.end-game-scores{
+				margin-right: 33%;
+				font-weight: 700;
+				font-size: 25px;
+				color: white;
+			}
+			#rematch-btn{
+				float: left;
+				font-weight: 700;
+				font-size: 25px;
+			}
+			.end-game-names{
+				font-size: 15px;
+				font-weight: 700;
+				color: gold;
+				margin: 0px;
+				padding: 0px;
+			}
+			.player-ready{
+				font-weight: 700;
+				float: left;
+				font-size: 16px;
+				color: white;
+				margin: 14px;
+			}
+			.dot {
+				height: 10px;
+				width: 10px;
+				background-color: red;
+				border-radius: 50%;
+				display: inline-block;
+			}
+
+			#starting-rematch-text{
+				display: none;
+				width: 100%;
+				text-align: center;
+				color: white;
+				font-weight: 500;
+				font-size: 20px;
+			}
+
+		</style>
+	</head>
+	<body>
+	
+		<div class="container">
+			<div id="board-container" class="row">
+				<div id="gwent-board" class="col-lg-12">
+					<div id="p11" class="row-score">0</div>
+					<div id="p12" class="row-score">0</div>
+					<div id="p13" class="row-score">0</div>
+					<div id="p21" class="row-score my-row">0</div>
+					<div id="p22" class="row-score my-row">0</div>
+					<div id="p23" class="row-score my-row">0</div>
+					<div id="p1b1" class="battle-row"></div>
+					<div id="p1b2" class="battle-row"></div>
+					<div id="p1b3" class="battle-row"></div>
+					<div id="p2b1" class="battle-row"></div>
+					<div id="p2b2" class="battle-row"></div>
+					<div id="p2b3" class="battle-row"></div>
+					<div id="p1hornb1" class="horns"></div>
+					<div id="p1hornb2" class="horns"></div>
+					<div id="p1hornb3" class="horns"></div>
+					<div id="p2hornb1" data-id="1" class="horns p2horns"></div>
+					<div id="p2hornb2" data-id="2"class="horns p2horns"></div>
+					<div id="p2hornb3" data-id="3" class="horns p2horns"></div>
+					<div id="p1gem1" class="gems"></div>
+					<div id="p1gem2" class="gems"></div>
+					<div id="p2gem1" class="gems"></div>
+					<div id="p2gem2" class="gems"></div>
+					<div id="p1total" class="totals">0</div>
+					<div id="p2total" class="totals my-total">0</div>
+					<div id="p1deck" class="decks"></div>
+					<div id="p2deck" class="decks"></div>
+					<div id="arrow-spot0" class="arrow-spots"></div>
+					<div id="arrow-spot1" class="arrow-spots"></div>
+					<div id="p1leader" class="leaders"></div>
+					<div id="p2leader" class="leaders"></div>
+					<div id="p1info" class="info">
+						<div id="p1name" class="names">name</div>
+						<div class="card-counter">Cards left: <span id="p1card-count">0</span></div>
+					</div>
+					<div id="p2info" class="info">
+						<div id="p2name" class="names">name</div>
+						<div class="card-counter">Cards left: <span id="p2card-count">0</span></div>						
+					</div>
+					<div id="weather"></div>
+					<div id="graveyard2" class="graveyards"></div>
+					<div id="graveyard1" class="graveyards"></div>
+					<div id="pass-btn" class="btn btn-primary">Pass</div>
+					<div id="block"></div>
+					<div id="king-block"></div>
+					<div id="pass-block"></div>
+				</div>
+				<div class="col-lg-12">
+					<div class="row">
+						<div id="player-hand" class="col-lg-12">
+							<button id="signup">Click here to play</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script>	
+
+		var cards = [
+			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
+			{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
+			{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
+			{img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+			{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/thaler.png', atk: 1, spec: 'spy', type: 0, hero: 0, baseAtk: 1, realType:1},
+			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
+		];
+
+
+		var deck1 = [
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0}
+		];
+
+		var deck2 = [
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},			
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+			{img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0}
+		];
+
+		var playerData = [];
+
+		var socket = io.connect('http://localhost:3000');
+
+		$(document).ready(function(){
+			$.ajax({
+
+		        method: 'GET',
+		        contentType: 'application/json',
+	        	dataType: 'json',
+
+		        url: '/get-player-data',
+
+		        success: function(response){
+					playerData = response;
+					setupBoard(response);
+					socket.emit('rejoin', 'gwentroom');
+					//player 1 starts dc-check instance
+					if(me == 0){
+						socket.emit('start-dc-check', {});
+					};
+		        }
+
+			});
+		});
+
+		var me;
+		var myDeck = [];
+
+		function setupBoard(data){
+
+			me = sessionStorage.getItem("pid");
+
+			for (var i = 0; i < data.length; i++) {
+				if(data[i].id == me){
+					$('#p2name').html(data[i].name);
+					if(data[i].deck == 'deck1'){
+						myDeck = deck1;
+					} else if(data[i].deck == 'deck2'){
+						myDeck = deck2;
+					};
+				} else {
+					$('#p1name').html(data[i].name);
+				}
+			}
+
+			drawHand();
+
+			pregameSelection();
+			//runs once players are ready.
+			//displays players card number and name
+		};
+
+		var playerHand = [];
+		var shuffledDeck;
+
+		function drawHand(){
+
+			//INSINUATES WE HAVE THE SAME AMOUNT OF CARDS
+			$('.decks').html(myDeck.length-10);
+
+			//resets players hand
+			$('#player-hand').empty();
+			playerHand = [];
+
+			shuffledDeck = shuffle(myDeck);
+
+			for(i = 0; i < 10; i++){
+				playerHand.push(shuffledDeck[i]);
+				$('#player-hand').append('<img class="card" data-id="'+i+'" src="'+shuffledDeck[i].img+'">');
+			};
+
+			shuffledDeck.splice(0, 8);
+
+		};
+
+		var pregameSelect = false;
+		var swaps = 0;
+		function pregameSelection(){
+
+			pregameSelect = true;
+			swaps = 2;
+			$('#gwent-board').append('<br><div id="pregame-select-div"><div id="pregame-select">Select 2 cards to replace<br>or<br>Select ready<br><br><div>Swaps Left: <span id="swap-counter"> 2</span></div><br><div id="skip-swap" class="btn btn-default">Ready</div></div></div>');
+			$('#king-block').css('display', 'block');	
+			$('#pass-block').css('display', 'block');			
+
+		};
+
+		var rematching = false;
+		function playerIsReady(){
+
+			if(!rematching){
+				var audio = new Audio('./gwent.mp3');
+				audio.play();
+				audio.loop = true;
+			};
+
+			swaps = 0;
+			pregameSelect = false;
+
+			socket.emit('ready', {id: me});
+
+		};
+
+		$('#gwent-board').on('click', '#skip-swap', function(){
+			playerIsReady();
+		});
+
+		function refreshHand(currentHand){
+			$('#player-hand').empty();
+			$('#p2card-count').html(currentHand.length);
+			for (var i = 0; i < currentHand.length; i++) {
+				$('#player-hand').append('<img class="card" data-id="'+i+'" src="'+currentHand[i].img+'">');
+			};
+			if(currentHand.length >= 12){
+				$('.card').css('marginRight', '-10px');
+			} else {
+				$('.card').css('marginRight', '5px');
+			}			
+
+		};
+
+		var frost = false;
+		var fog = false;
+		var rain = false;
+
+		function heroCheck(card){
+			if(card.hero == 1){
+				return true;
+			} else if(card.hero == 0){
+				return false;
+			};
+		};
+
+		function clearSelected(){
+			$(".selected-div").remove();
+		};
+
+		function selectCard(pick){
+			var cardId = $(pick).attr("data-id");
+			var selectedCard = playerHand[cardId];
+			if(pregameSelect){
+				var action = 'Swap';
+			} else {
+				var action = 'Play';
+			}
+			$('#gwent-board').append('<div class="selected-div"><img class="card selected" src="'+playerHand[cardId].img+'"><button data-id="'+cardId+'" id="confirm-play" class="btn-success btn">'+action+'</button><button id="cancel-play" class="btn-danger btn">Cancel</button></div>');			
+		};
+
+		function confirmPlay(cardPlayed){
+			var cardId = $(cardPlayed).attr("data-id");
+			var playedCard = playerHand[cardId];
+
+			clearSelected();
+
+			if(pregameSelect){
+
+				playerHand.splice(cardId, 1);
+				playerHand.push(shuffledDeck[0]);
+				shuffledDeck.splice(0, 1);
+				swaps--;
+				$('#swap-counter').html(swaps);
+				if(swaps == 0){
+					playerIsReady();
+				};
+
+			} else {
+
+				playerHand.splice(cardId, 1);
+
+				//if card is a special card
+				if(playedCard.type == 0){
+					specialCard(2, playedCard);
+				} else {
+					addCardToBoard(2, playedCard);
+				};
+
+			};
+
+			refreshHand(playerHand);
+			// resizeRows();
+
+		};
+
+		function resizeRows(){
+
+			for (var i = 1; i < 3; i++) {
+				for (var ii = 1; ii < 4; ii++) {
+					var currRow = $('#p'+i+'b'+ii+' img').length;
+					if(currRow > 7){
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-30px');
+					} else if(currRow > 9){
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-40px');
+					} else {
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-18px');
+					}
+				};
+			};
+
+		};
+
+		function addCardToBoard(player, newCard, action){
+
+			var hero = heroCheck(newCard);
+
+			if(hero){
+				var heroClass = "hero";
+			} else {
+				var heroClass = "";
+			};
+
+			gameboard[(player-1)][newCard.type-1].push(newCard);
+
+			$('#p'+player+'b'+newCard.type).append('<img data-id="'+newCard.spec+'" data-base="'+newCard.baseAtk+'" data-atk="'+newCard.atk+'" data-row="'+(newCard.type-1)+'" data-spot="'+(gameboard[player-1][newCard.type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+newCard.img+'">');			
+
+			if(newCard.spec != 'none'){
+				if(action == 'healed'){
+					specialAttack(player, newCard, 'healed');
+				} else {
+					specialAttack(player, newCard, 'none');
+				};
+			} else {
+				if(player == 2){
+					if(action != 'healed'){
+						endTurn(newCard, false, false, false, false, false, false, false, false);
+					};
+				} else {
+					turnOver();
+				}
+			};
+
+			calculateScore();
+		};
+
+		function specialCard(player, card, action){
+			if(card.spec == 'frost'){
+
+				if(frost){
+					alert('frost already active');
+					if(player == 2){
+						endTurn(card, false, true, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};					
+				} else {
+					frost = true;
+					activateWeather('frost', 0, player, card);
+				};
+
+			} else if(card.spec == 'fog'){
+
+				if(fog){
+					alert('fog already active');
+					if(player == 2){
+						endTurn(card, false, true, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};					
+				} else {
+					fog = true;
+					activateWeather('fog', 1, player, card);
+				};	
+
+			} else if(card.spec == 'rain'){ 
+
+				if(rain){
+					alert('rain already active');
+					if(player == 2){
+						endTurn(card, false, true, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};					
+				} else {
+					rain = true;
+					activateWeather('rain', 2, player, card);
+				};	
+
+				// rain = true;
+				// activateWeather('rain', 2, player, card);
+
+			} else if(card.spec == 'scorch'){
+
+				activateScorch(2);
+
+			} else if(card.spec == 'spy'){ 
+
+				activateSpy(card, 2, action);
+
+			} else if(card.spec == 'decoy'){
+
+				setupDecoy();
+
+			} else if(card.spec == 'horn'){
+
+				setupHorn();
+
+			} else if(card.spec == 'clear'){
+
+				if(frost){
+					var p1Frestore = $('#p1b1').find('.played-card');
+					var p2Frestore = $('#p2b1').find('.played-card');
+					for (var i = 0; i < p1Frestore.length; i++) {
+						var resetAtk = $(p1Frestore[i]).attr("data-base");
+						$(p1Frestore[i]).attr("data-atk", resetAtk);
+					};
+					for (var i = 0; i < p2Frestore.length; i++) {
+						var resetAtk = $(p2Frestore[i]).attr("data-base");
+						$(p2Frestore[i]).attr("data-atk", resetAtk);
+					};	
+				};
+				if(fog){
+					var p1Fgrestore = $('#p1b2').find('.played-card');
+					var p2Fgrestore = $('#p2b2').find('.played-card');
+					for (var i = 0; i < p1Fgrestore.length; i++) {
+						var resetAtk = $(p1Fgrestore[i]).attr("data-base");
+						$(p1Fgrestore[i]).attr("data-atk", resetAtk);
+					};
+					for (var i = 0; i < p2Fgrestore.length; i++) {
+						var resetAtk = $(p2Fgrestore[i]).attr("data-base");
+						$(p2Fgrestore[i]).attr("data-atk", resetAtk);
+					};	
+				};
+				if(rain){
+					var p1Rrestore = $('#p1b3').find('.played-card');
+					var p2Rrestore = $('#p2b3').find('.played-card');
+					for (var i = 0; i < p1Rrestore.length; i++) {
+						var resetAtk = $(p1Rrestore[i]).attr("data-base");
+						$(p1Rrestore[i]).attr("data-atk", resetAtk);
+					};
+					for (var i = 0; i < p2Rrestore.length; i++) {
+						var resetAtk = $(p2Rrestore[i]).attr("data-base");
+						$(p2Rrestore[i]).attr("data-atk", resetAtk);
+					};					
+				};
+
+				frost = false;
+				fog = false;
+				rain = false;
+
+				for (var i = 0; i < gameboard.length; i++) {
+					for (var ii = 0; ii < gameboard[i].length; ii++) {
+						for (var iii = 0; iii < gameboard[i][ii].length; iii++) {
+							gameboard[i][ii][iii].atk = gameboard[i][ii][iii].baseAtk;
+						};
+					};
+				};
+
+				reactivateTeams();
+
+				$('#p1b1').removeClass('frost');
+				$('#p2b1').removeClass('frost');
+				$('#p1b2').removeClass('fog');
+				$('#p2b2').removeClass('fog');
+				$('#p1b3').removeClass('rain');
+				$('#p2b3').removeClass('rain');
+				$('#weather').html('');
+
+				if(player == 2){
+					endTurn(card, false, true, false, false, false, false, false, false);
+				} else {
+					turnOver();
+				};					
+
+			};		
+
+			calculateScore();
+
+		};
+
+		function activateWeather(type, row, player, card){
+
+			for (var i = 0; i < gameboard.length; i++) {
+				var updateData = $('#p'+(i+1)+'b'+(row+1)).find('.played-card');
+				for (var ii = 0; ii < gameboard[i][row].length; ii++) {
+					var hero = heroCheck(gameboard[i][row][ii]);
+					if(!hero){
+						gameboard[i][row][ii].atk = 1;
+						$(updateData[i]).attr("data-atk", gameboard[i][row][ii].atk);
+					};
+				};
+			};
+
+			$('#p1b'+(row+1)).addClass(type);
+			$('#p2b'+(row+1)).addClass(type);
+
+			if(type == 'fog'){
+				fileType = '.jpg';
+			} else {
+				fileType = '.png';
+			};
+			$('#weather').append('<img data-id="'+type+'" class="weather-card" src="./cards/'+type+'-cut'+fileType+'">');
+
+			var damagedp1Cards = $('#p1b'+(row+1)).find('.played-card');
+			var damagedp2Cards = $('#p2b'+(row+1)).find('.played-card');
+			damagedp1Cards.attr('data-atk', 1);
+			damagedp2Cards.attr('data-atk', 1);
+
+			if(player == 2){
+				endTurn(card, false, true, false, false, false, false, false, false);
+			} else {
+				turnOver();
+			};
+
+			calculateScore();
+		};
+
+		function activateScorch(player){
+
+			var rows = [];
+			for (var i = 0; i < gameboard.length; i++) {
+				for (var ii = 0; ii < gameboard[i].length; ii++) {
+
+					if(horns[i]['horn'+(ii+1)]){
+						maxNumForRow = Math.max.apply(Math, gameboard[i][ii].map(function(o) { if(o.hero == 0){ return o.atk*2; }else{ return 0; } }));
+					} else {
+						maxNumForRow = Math.max.apply(Math, gameboard[i][ii].map(function(o) { if(o.hero == 0){ return o.atk; }else{ return 0; } }));
+					};
+
+					rows.push({num: maxNumForRow, row: ii, player: i});
+				};
+			};
+
+			var highestRowNum = Math.max.apply(Math, rows.map(function(o) { return o.num; }));
+		
+			var element = $('#gwent-board').find('[data-atk='+highestRowNum+']');
+
+			var filterEle = element.not(".hero");
+
+			$(filterEle).fadeOut();
+
+			var timer = setTimeout(function(){
+				$(filterEle).remove();
+			}, 1000);
+
+			var i = gameboard.length;
+			while (i--){
+				var ii = gameboard[i].length;
+				while (ii--) {
+					var iii = gameboard[i][ii].length;
+					while(iii--){
+
+						if(horns[i]['horn'+(ii+1)]){
+							realAtk = gameboard[i][ii][iii].atk*2
+						} else {
+							realAtk = gameboard[i][ii][iii].atk
+						};
+
+						if(realAtk == highestRowNum){
+							currentGameScore[i].graveyard.push(gameboard[i][ii][iii]);
+							gameboard[i][ii].splice(iii, 1);
+						};
+
+					};
+				};
+			};
+
+			refreshGraveyard();
+			calculateScore();
+
+			if(player == 2){
+				endTurn({img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0}, false, false, false, true, false, false, false, false);
+			} else {
+				turnOver();
+			};
+
+
+		};
+
+		function activateSpy(card, player, action){
+
+			if(card.hero == 1){
+				var heroClass = "hero";
+			} else {
+				var heroClass = "";
+			};
+
+			if(player == 2){
+
+				gameboard[0][card.realType-1].push(card);
+
+				$('#p1b'+card.realType).append('<img class="played-card '+heroClass+'" data-id="'+card.spec+'" data-base="'+card.baseAtk+'" data-atk="'+card.atk+'" data-row="'+(card.realType-1)+'" data-spot="'+(gameboard[0][card.realType-1].length-1)+'" src="'+card.img+'">');
+
+				for (var i = 0; i < 2; i++) {
+					playerHand.push(shuffledDeck[i]);
+					//$('#player-hand').append('<img class="card" data-id="'+i+'" src="'+shuffledDeck[i].img+'">');
+				};
+
+				refreshHand(playerHand);				
+
+				shuffledDeck.splice(0, 2);
+
+				if(action != 'healed'){
+					endTurn(card, false, false, false, false, false, false, true, false);
+				};
+
+			} else {
+
+				gameboard[1][card.realType-1].push(card);
+
+				$('#p2b'+card.realType).append('<img class="played-card '+heroClass+'" data-id="'+card.spec+'" data-base="'+card.baseAtk+'" data-atk="'+card.atk+'" data-row="'+(card.realType-1)+'" data-spot="'+(gameboard[1][card.realType-1].length-1)+'" src="'+card.img+'">');
+
+				calculateScore();
+
+				if(action != 'healed'){
+					turnOver();
+				};
+
+			};		
+
+		};
+
+		function specialAttack(player, card, action){
+			if(card.spec == 'team4'){
+
+				activateTeam('team4', 0, 4);
+
+				if(action != 'healed'){
+					if(player == 2){
+						endTurn(card, false, false, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};
+				};					
+
+			} else if(card.spec == 'team5'){
+
+				activateTeam('team5', 1, 5);
+
+				if(action != 'healed'){
+					if(player == 2){
+						endTurn(card, false, false, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};				
+				};	
+
+			} else if(card.spec == 'team8'){
+
+				activateTeam('team8', 2, 8);
+
+				if(action != 'healed'){
+					if(player == 2){
+						endTurn(card, false, false, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};
+				};			
+
+			} else if(card.spec == 'heal'){
+
+				if(player == 2){
+					activateHeal(card);
+				} else {
+					turnOver(); //shot in the dark
+				};
+
+			};
+
+		};		
+
+		function activateTeam(team, introw, xX){
+
+			for (var i = 1; i < 3; i++) {
+
+				var teamMulti = $('#p'+i+'b'+(introw+1)).find('[data-id="'+team+'"]').length;
+
+				for (var ii = 0; ii < gameboard[i-1][introw].length; ii++) {
+					if(gameboard[i-1][introw][ii].spec == team){
+						gameboard[i-1][introw][ii].atk = xX * teamMulti;
+					};
+				};
+
+				var telements = $('#p'+i+'b'+(introw+1)).find('[data-id="'+team+'"]');
+				$(telements).attr('data-atk', xX * teamMulti);
+
+				if(teamMulti > 1){
+					$('#p'+i+'b'+(introw+1)).find('[data-id="'+team+'"]').addClass('spec-active');
+				};
+
+			};
+
+		};
+
+		function reactivateTeams(){
+
+			if(frost){
+				activateTeam('team4', 0, 1);
+			} else {
+				activateTeam('team4', 0, 4);
+			};
+
+			if(fog){
+				activateTeam('team5', 1, 1);
+			} else {
+				activateTeam('team5', 1, 5);
+			};
+
+			if(rain){
+				activateTeam('team8', 2, 1);
+			} else {
+				activateTeam('team8', 2, 8);
+			};
+
+		};
+
+		function setupDecoy(){
+
+			var allMyCards = $('#p2b1 ,#p2b2 ,#p2b3').find('.played-card');
+			
+			var selectableCards = allMyCards.not('.hero');
+
+			if(selectableCards.length == 0){
+				alert('no cards to decoy');
+				endTurn({row: 'none', spot: 'none', img: './cards/decoy.png'}, false, false, false, false, true, false, false, false);
+			} else {
+				selectableCards.addClass('selecting');
+				$('#gwent-board').append('<div id="horn-select-div"><div id="horn-select">Select unit.</div></div>');
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');
+				$('#pass-block').css('display', 'block');
+				selectingDecoy = true;
+			};
+		};
+
+		$('#gwent-board').on('click', '.selecting', function(){
+			if(selectingDecoy){
+
+				var cardSpot = $(this).attr("data-spot");
+				var cardRow = $(this).attr("data-row");
+
+				var decoyed = gameboard[1][cardRow][cardSpot];
+
+				playerHand.push(gameboard[1][cardRow][cardSpot]);
+
+				refreshHand(playerHand);
+
+				gameboard[1][cardRow].splice(cardSpot, 1, {img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0});
+
+				$(this).attr("src","./cards/decoy.png");
+				$(this).attr("data-id","decoy");
+				$(this).attr("data-atk", 0);
+				$(this).attr("data-base", 0);
+				$(this).addClass('hero');
+
+				var selectedCards = $('#gwent-board').find('.selecting');
+				selectedCards.removeClass('selecting');
+
+				$('#horn-select-div').remove();
+				$('#block').css('display', 'none');
+				$('#king-block').css('display', 'none');
+				$('#pass-block').css('display', 'none');
+				selectingDecoy = false;
+
+				calculateScore();
+
+				endTurn({row: cardRow, spot: cardSpot, img: './cards/decoy.png'}, false, false, false, false, true, false, false, false);
+
+			};
+		});
+
+		var selectingHorn;
+
+		function setupHorn(){
+			for (var i = 1; i <= 3; i++) {
+				if(!$('#p2hornb'+i).hasClass('horn-active')){
+					$('#p2hornb'+i).addClass('selecting');
+				};
+			};
+			$('#gwent-board').append('<div id="horn-select-div"><div id="horn-select">Select row.</div></div>');
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');
+			$('#pass-block').css('display', 'block');
+			selectingHorn = true;
+		};
+
+		$('.p2horns').on('click', function(){
+			if(selectingHorn){
+				if($(this).hasClass('horn-active')){
+					alert('horn already active here.');
+				} else {
+					var hornId = $(this).attr("data-id");
+					selectingHorn = false;			
+					$('#block').css('display', 'none');
+					$('#king-block').css('display', 'none');
+					$('#pass-block').css('display', 'none');
+					$('#horn-select-div').remove();
+					for (var i = 1; i <= 3; i++) {
+						$('#p2hornb'+i).removeClass('selecting');
+					};
+					$('#p2hornb'+hornId).html('<img class="played-card" src="./cards/horn.png">');
+					$('#p2hornb'+hornId).addClass('horn-active');	
+					activateHorn(hornId, 'reg');										
+				}
+			};
+		});
+
+
+		var horns = [
+			{horn1: false, horn2: false, horn3: false},
+			{horn1: false, horn2: false, horn3: false}
+		];
+		function activateHorn(id, type){
+
+			horns[1]['horn'+id] = true;
+
+			var updateData = $('#p'+2+'b'+id).find('.played-card');
+
+			for (var i = 0; i < gameboard[1][id-1].length; i++) {
+				$(updateData[i]).attr("data-atk", gameboard[1][id-1][i].atk);
+			};
+
+			if(type == 'reg'){
+				endTurn({img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0, row: id}, false, false, true, false, false, false, false, false);
+			} else if (type == 'leader'){
+				endTurn({img: './cards/leader.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0, row: id}, false, false, false, false, false, true, false, false);
+			}
+
+			calculateScore();
+		};
+
+		function refreshGraveyard(){
+
+			//remove all heros from graveyard
+			var i = currentGameScore.length
+			while (i--) {
+				var ii = currentGameScore[i].graveyard.length
+				while (ii--) {
+				    if(currentGameScore[i].graveyard[ii].hero == 1) { 
+				    	currentGameScore[i].graveyard.splice(ii, 1);
+				    }; 
+				};
+			};
+
+			//	WHY DO WE NEED THIS?
+			// for (var i = 0; i < gameboard.length; i++) {
+			// 	for (var ii = 0; ii < gameboard[i].length; ii++) {
+			// 		for (var iii = 0; iii < gameboard[i][ii].length; iii++) {
+			// 			gameboard[i][ii][iii].atk = gameboard[i][ii][iii].baseAtk;
+			// 		};
+			// 	};
+			// };			
+
+			for (var i = 0; i < currentGameScore.length; i++) {
+				for (var ii = 0; ii < currentGameScore[i].graveyard.length; ii++) {
+					//resets card atk to normal
+					currentGameScore[i].graveyard[ii].atk = currentGameScore[i].graveyard[ii].baseAtk;
+				};
+			};
+
+			console.log(currentGameScore);
+
+			if(currentGameScore[0].graveyard.length == 0){
+				$('#graveyard1').empty();				
+			} else {
+				$('#graveyard1').html('<img class="played-card" src="'+currentGameScore[0].graveyard[currentGameScore[0].graveyard.length-1].img+'">');
+			}
+			if(currentGameScore[1].graveyard.length == 0){
+				$('#graveyard2').empty();
+			} else {
+				$('#graveyard2').html('<img class="played-card" src="'+currentGameScore[1].graveyard[currentGameScore[1].graveyard.length-1].img+'">');
+			}	
+
+		};
+
+		var currentGameScore = [
+				{
+					playerTotal: 0,
+					playerScores: [0,0,0],
+					graveyard: [],
+					gemScore: 0,
+					rounds: []
+				},
+				{
+					playerTotal: 0,
+					playerScores: [0,0,0],
+					graveyard: [],
+					gemScore: 0,
+					rounds: []
+				}
+			];	
+
+		var gameboard = [
+			[
+				[],
+				[],
+				[]
+			],
+			[
+				[],
+				[],
+				[]
+			]
+
+		];
+
+		function calculateScore(){
+
+			currentGameScore[0].playerTotal = 0;
+			currentGameScore[0].playerScores = [0,0,0];
+			currentGameScore[1].playerTotal = 0;
+			currentGameScore[1].playerScores = [0,0,0];			
+
+			for (var i = 0; i < gameboard.length; i++) {
+
+				for (var z = 0; z < gameboard[i].length; z++) {
+
+					//var updateData = $('#p'+(i+1)+'b'+(z+1)).find('.played-card');
+
+					for (var y = 0; y < gameboard[i][z].length; y++) {
+
+						if(z == 0){
+
+							var updateData = $('#p'+(i+1)+'b'+(z+1)).find('.played-card');
+							var hero = heroCheck(gameboard[i][z][y]);
+
+							if(frost){
+								if(!hero){
+									gameboard[i][z][y].atk=1;
+									reactivateTeams();
+								};
+							};
+
+							if(horns[i]['horn'+(z+1)]){
+								if(!hero){
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk*2;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk*2;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk*2);
+								} else {
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+								}
+							} else {
+								currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+								currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+								$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+							};
+
+						} else if(z == 1){
+
+							var updateData = $('#p'+(i+1)+'b'+(z+1)).find('.played-card');
+							var hero = heroCheck(gameboard[i][z][y]);
+
+							if(fog){
+								if(!hero){
+									gameboard[i][z][y].atk=1;
+									reactivateTeams();
+								};
+							};							
+
+							if(horns[i]['horn'+(z+1)]){
+								if(!hero){
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk*2;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk*2;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk*2);
+								} else {
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+								}
+							} else {
+								currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+								currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+								$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+							};							
+
+						} else if (z == 2){
+
+							var updateData = $('#p'+(i+1)+'b'+(z+1)).find('.played-card');
+							var hero = heroCheck(gameboard[i][z][y]);
+
+							if(rain){
+								if(!hero){
+									gameboard[i][z][y].atk=1;
+									reactivateTeams();
+								};
+							};							
+
+							if(horns[i]['horn'+(z+1)]){
+								if(!hero){
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk*2;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk*2;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk*2);
+								} else {
+									currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+									currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+									$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+								}
+							} else {
+								currentGameScore[i].playerScores[z] += gameboard[i][z][y].atk;
+								currentGameScore[i].playerTotal += gameboard[i][z][y].atk;
+								$(updateData[y]).attr("data-atk", gameboard[i][z][y].atk);
+							};
+
+						};
+					};
+				};
+			};
+
+			$('#p21').html(currentGameScore[1].playerScores[0]);
+			$('#p22').html(currentGameScore[1].playerScores[1]);
+			$('#p23').html(currentGameScore[1].playerScores[2]);
+			$('#p2total').html(currentGameScore[1].playerTotal);
+
+			$('#p11').html(currentGameScore[0].playerScores[0]);
+			$('#p12').html(currentGameScore[0].playerScores[1]);
+			$('#p13').html(currentGameScore[0].playerScores[2]);
+			$('#p1total').html(currentGameScore[0].playerTotal);
+
+			console.log(currentGameScore);
+			console.log(gameboard);
+
+		};
+
+		var leaderActivated = false;
+
+		function playLeader(){
+			if(!leaderActivated){
+				$('#gwent-board').append('<div class="selected-div"><img class="card selected" src="./cards/leader.png"><button id="confirm-play-leader" class="btn-success btn">Play</button><button id="cancel-play" class="btn-danger btn">Cancel</button></div>');	
+			};
+		};
+
+		function activateLeader(){
+			leaderActivated = true;
+			clearSelected();
+			$('#p2hornb3').html('<img class="played-card" src="./cards/horn.png">');
+			$('#p2hornb3').addClass('horn-active');
+			$('#p2leader').addClass('fade');
+			activateHorn(3, 'leader');
+		};
+
+		var nurse;
+		function activateHeal(card){
+			if(currentGameScore[1].graveyard.length == 0){
+				alert('no units left to heal');
+				$('#graveyard-block').remove();
+				endTurn(card, false, false, false, false, false, false, false, false);
+			} else {
+				nurse = card;
+				var graveSelectDiv = '<div id="graveyard-block"><div id="graveyard-heal"><div id="graveyard-select-title">Select card to heal.</div><br>';
+				for (var i = 0; i < currentGameScore[1].graveyard.length; i++) {
+					//if(currentGameScore[1].graveyard[i].hero == 0){
+						graveSelectDiv+='<img class="graveyard-cards" data-id="'+i+'" src="'+currentGameScore[1].graveyard[i].img+'">';
+					//};
+				};
+				graveSelectDiv+='</div></div>';
+				$('#gwent-board').append(graveSelectDiv);
+			};		
+		};
+
+		function selectHeal(card){
+
+			var cardId = $(card).attr("data-id");
+
+			healedCard = currentGameScore[1].graveyard[cardId];
+
+			currentGameScore[1].graveyard.splice(cardId, 1);
+
+			if(healedCard.type == 0){
+				specialCard(2, healedCard, 'healed'); //spy
+			} else {
+				if(healedCard.spec == 'heal'){ //heal
+					playerHand.push(healedCard);
+					refreshHand(playerHand);
+				} else {
+					addCardToBoard(2, healedCard, 'healed'); // normal, special
+				}
+			};			
+
+			$('#graveyard-block').remove();
+
+			refreshGraveyard();
+
+			endTurn(nurse, healedCard, false, false, false, false, false, false, false);
+
+			nurse = '';
+
+		};
+
+		function shuffle(deck) {
+			for(var j, x, i = deck.length; i; j = parseInt(Math.random() * i), x = deck[--i], deck[i] = deck[j], deck[j] = x);
+			return deck;
+		};
+
+		var p1Pass = false;
+		var p2Pass = false;
+
+		var passOpen = false;
+		$('#pass-btn').on('click', function(){
+			if(!passOpen){
+				passOpen = true;
+				$('.selected-div').remove();
+				$('#gwent-board').append('<div id="pass-select-div"><div id="pass-select">Are you sure you want to pass?</div><button id="confirm-pass" class="btn-success btn passing">Pass</button><button id="cancel-pass" class="btn-danger btn passing">Cancel</button></div>');
+			};
+		});
+
+		$('#gwent-board').on('click', '#confirm-pass', function(){
+			$("#pass-select-div").remove();
+			passOpen = false;
+			p2Pass = true;
+			$('#arrow-spot1').html('Passed');
+			$('#arrow-spot1').addClass('passed');
+			endTurn({}, false, false, false, false, false, false, false, true);
+		});
+
+		$('#gwent-board').on('click', '#cancel-pass', function(){	
+			$("#pass-select-div").remove();
+			passOpen = false;
+		});
+
+		$('#player-hand').on('click', '.card', function(){
+			$("#pass-select-div").remove();
+			passOpen = false;
+			$('.selected-div').remove();			
+			selectCard(this);
+		});
+
+		$('#gwent-board').on('click', '#confirm-play', function(){
+			confirmPlay(this);
+		});
+
+		$('#gwent-board').on('click', '#cancel-play', function(){			
+			clearSelected();
+		});
+
+		$('#gwent-board').on('click', '.graveyard-cards', function(){
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');
+			$('#pass-block').css('display', 'block');
+			selectHeal(this);
+		});				
+
+		$('#p2leader').on('click', function(){
+			$("#pass-select-div").remove();
+			passOpen = false;
+			$('.selected-div').remove();
+			playLeader();
+		});
+
+		$('#gwent-board').on('click', '#confirm-play-leader', function(){
+			activateLeader();
+			//blocks needed here?
+		});
+
+		function endTurn(card, healed, weather, horn, scorch, decoy, leader, spy, pass){
+
+			if(p1Pass == true && p2Pass == true){
+					socket.emit('round-over', {name: playerData[me].name, p1: currentGameScore[0].playerTotal, p2: currentGameScore[1].playerTotal});
+			} else {
+
+				resizeRows();
+				turnOver();
+
+				socket.emit('end-turn', {card: card, healed: healed, weather: weather, horn: horn, scorch: scorch, decoy: decoy, leader: leader, spy: spy, cardsLeft: playerHand.length, pass: pass});
+
+			};
+		};
+
+		socket.on('finish-round', function(data){
+
+				var allScores = {p1: {name: data.name, p1: data.p1, p2: data.p2}, p2: {name: playerData[me].name, p1: currentGameScore[0].playerTotal, p2: currentGameScore[1].playerTotal}};
+				socket.emit('check-winner', allScores);
+
+		});
+
+		socket.on('round-results', function(data){
+
+			$('#arrow-spot1').html('Passed');
+			$('#arrow-spot1').addClass('passed');					
+			$('#arrow-spot0').html('Passed');
+			$('#arrow-spot0').addClass('passed');
+			$('#arrow-spot0').fadeIn();
+			$('#arrow-spot1').fadeIn();
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');
+			$('#pass-block').css('display', 'block');
+
+			if(data.draw){
+
+				setTimeout(function(){
+
+					$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Draw!</div></div>');
+					updateGems('draw');
+
+				}, 1250);
+
+			} else {
+
+				setTimeout(function(){
+
+					$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' gets <span class="plus1">+1</span> card!</div></div>');
+
+					//gives +1 card to winner
+					if(playerData[me].name == data.name){
+						playerHand.push(shuffledDeck[0]);
+						shuffledDeck.splice(0, 1);
+						refreshHand(playerHand);
+					} else {
+						var updatedCardCount = oppPackage.cardsLeft+=1;
+						$('#p1card-count').html(updatedCardCount);
+					};
+
+					updateGems(data.player);
+
+				}, 1250);
+
+			};			
+
+		});
+
+		function refreshBoard(){
+			for (var i = 0; i < currentGameScore.length; i++) {
+				currentGameScore[i].playerTotal = 0;
+				currentGameScore[i].playerScores = [0,0,0];
+			};
+			currentGameScore[0].graveyard.push(...gameboard[0][0], ...gameboard[0][1], ...gameboard[0][2]);
+			currentGameScore[1].graveyard.push(...gameboard[1][0], ...gameboard[1][1], ...gameboard[1][2]);
+			refreshGraveyard();	
+			gameboard = [
+							[
+								[],
+								[],
+								[]
+							],
+							[
+								[],
+								[],
+								[]
+							]
+						];			
+			$('#arrow-spot1').html('');
+			$('#arrow-spot1').removeClass('passed');					
+			$('#arrow-spot0').html('');
+			$('#arrow-spot0').removeClass('passed');			
+			$('.battle-row').html('');
+			$('.horns').html('');
+			$('.row-score').html('0');
+			$('.totals').html('0');
+			$('#weather').html('');
+			$('#p1b1').removeClass('frost');
+			$('#p2b1').removeClass('frost');
+			$('#p1b2').removeClass('fog');
+			$('#p2b2').removeClass('fog');
+			$('#p1b3').removeClass('rain');
+			$('#p2b3').removeClass('rain');	
+
+			horns = [
+				{horn1: false, horn2: false, horn3: false},
+				{horn1: false, horn2: false, horn3: false}
+			];
+
+			p2Pass = false;
+			p1Pass = false;
+			rain = false;
+			fog = false;
+			frost = false;	
+
+		};
+
+		function updateGems(scorer){
+
+			
+			if(scorer == 'draw'){
+				for (var i = 0; i < currentGameScore.length; i++) {
+					currentGameScore[i].gemScore+=1;
+				};
+			} else {
+				currentGameScore[scorer].gemScore+=1;
+			};		
+
+			for (var i = 0; i < currentGameScore.length; i++) {
+				currentGameScore[i].rounds.push(currentGameScore[i].playerTotal);
+				if(currentGameScore[i].gemScore != 0){
+					for (var ii = 0; ii < currentGameScore[i].gemScore; ii++) {
+						if(scorer == 'draw'){
+							$('#p1gem'+(ii+1)).addClass('deadgem');
+							$('#p2gem'+(ii+1)).addClass('deadgem');
+						} else {
+							if(me == scorer){
+								$('#p1gem'+(ii+1)).addClass('deadgem');
+							} else {
+								$('#p2gem'+(ii+1)).addClass('deadgem');
+							};						
+						}
+					};
+
+				};
+			};	
+
+			if(currentGameScore[0].gemScore == 2 && currentGameScore[1].gemScore == 2){ //draw
+				setTimeout(function(){
+					endGameScreen('draw');
+				}, 1250);
+			} else if (currentGameScore[0].gemScore == 2){ //player 1 wins
+				setTimeout(function(){
+					endGameScreen(0);
+				}, 1250);
+			} else if(currentGameScore[1].gemScore == 2){ //player 2 wins
+				setTimeout(function(){
+					endGameScreen(1);
+				}, 1250);
+			} else { //game continues
+				setTimeout(function(){
+				 	$('.opp-display-div').remove();
+
+				 	setTimeout(function(){
+
+				 		$('#arrow-spot0').fadeOut();
+						$('#arrow-spot1').fadeOut();
+						refreshBoard();
+
+						setTimeout(function(){
+							//player 1 starts new-round
+							if(me == 0){
+								socket.emit('new-round', {type: 'new-round'});
+							};
+						}, 1000);
+
+				 	}, 1500);
+				}, 2500);	
+			}
+		};
+
+		function endGameScreen(winner){
+
+			$('#board-container').css('opacity', '0.10');
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');	
+			$('#pass-block').css('display', 'block');			
+
+			if(me == 0){
+				var opp = 1;
+			} else {
+				var opp = 0;
+			};			
+
+			if(winner == 'draw'){
+				$('.container').append("<div class='end-game-div'><h1 id='winner-name'>Draw!</h1><div class='end-game-names'>"+playerData[opp].name+"</div><span class='end-game-scores' id='p0r0'></span><span class='end-game-scores' id='p0r1'></span><span class='end-game-scores' id='p0r2'></span><hr><div class='end-game-names'>"+playerData[me].name+"</div><span class='end-game-scores' id='p1r0'></span><span class='end-game-scores' id='p1r1'></span><span class='end-game-scores' id='p1r2'></span><br><br><div id='rematch-btn' class='btn-danger btn'>Rematch?</div><div class='player-ready'>"+playerData[me].name+" ready: <span id='p2dot' class='dot'></span></div><div class='player-ready'>"+playerData[opp].name+" ready: <span id='p1dot' class='dot'></span></div><div id='starting-rematch-text'>Starting game...</div></div>");
+			} else {
+				$('.container').append("<div class='end-game-div'><h1 id='winner-name'>"+playerData[winner].name+" wins!</h1><div class='end-game-names'>"+playerData[opp].name+"</div><span class='end-game-scores' id='p0r0'></span><span class='end-game-scores' id='p0r1'></span><span class='end-game-scores' id='p0r2'></span><hr><div class='end-game-names'>"+playerData[me].name+"</div><span class='end-game-scores' id='p1r0'></span><span class='end-game-scores' id='p1r1'></span><span class='end-game-scores' id='p1r2'></span><br><br><div id='rematch-btn' class='btn-danger btn'>Rematch?</div><div class='player-ready'>"+playerData[me].name+" ready: <span id='p2dot' class='dot'></span></div><div class='player-ready'>"+playerData[opp].name+" ready: <span id='p1dot' class='dot'></span></div><div id='starting-rematch-text'>Starting game...</div></div>");
+			};
+
+			for (var i = 0; i < currentGameScore.length; i++) {
+				for (var ii = 0; ii < currentGameScore[i].rounds.length; ii++) {
+					$('#p'+i+'r'+ii).html(currentGameScore[i].rounds[ii]);
+				};
+			};
+
+		};
+
+		$('.container').on('click', '#rematch-btn', function(){
+			imReady();
+		});
+
+		var p1rematch = false;
+		var p2rematch = false;
+
+		function imReady(){
+			p2rematch = true;
+			$('#p2dot').css('background-color', 'lime');
+			socket.emit('rematch-rdy', {});
+		};
+
+		socket.on('opp-rematch-rdy', function(data){
+			p1rematch = true;
+			$('#p1dot').css('background-color', 'lime');
+
+			if(p1rematch == true && p2rematch == true){
+				rematching = true;
+				socket.emit('start-rematch', {});
+			};
+
+		});
+
+		socket.on('starting-rematch', function(data){
+			$('#starting-rematch-text').fadeIn();
+			currentGameScore = [
+										{
+											playerTotal: 0,
+											playerScores: [0,0,0],
+											graveyard: [],
+											gemScore: 0,
+											rounds: []
+										},
+										{
+											playerTotal: 0,
+											playerScores: [0,0,0],
+											graveyard: [],
+											gemScore: 0,
+											rounds: []
+										}
+									];
+			gameboard = [
+							[
+								[],
+								[],
+								[]
+							],
+							[
+								[],
+								[],
+								[]
+							]
+						];
+			setTimeout(function(){
+				restartGame();
+			}, 2500);
+		});
+
+		function restartGame(){
+			p1rematch = false;
+			p2rematch = false;
+			$('#p1leader').removeClass('fade');	
+			$('#p2leader').removeClass('fade');	
+			$('.end-game-div').remove();
+			$('.opp-display-div').remove();
+	 		$('#arrow-spot0').fadeOut();
+			$('#arrow-spot1').fadeOut();			
+			$('#board-container').css('opacity', '1.00');
+			$('.gems').removeClass('deadgem');		
+			turnOrder;
+			roundCounter = 1;
+			$('#p1card-count').html('10');
+			$('#p2card-count').html('10');	
+			refreshBoard();
+			setupBoard(playerData);
+		};
+
+		var oppPackage;
+
+		socket.on('opp-player-turn', function(data){
+
+			resizeRows();
+
+			oppPackage = data;
+
+			$('#p1card-count').html(data.cardsLeft);
+
+			if(!data.pass){
+				displayOppMove(data);
+			};
+
+			if(data.healed){	
+
+				addCardToBoard(1, data.card);
+
+				if(data.healed.type == 0){
+					displayOppSpy({card: data.healed}, 'healed'); //spy
+				} else {
+					if(data.healed.spec != 'heal'){ //normal, special
+						addCardToBoard(1, data.healed, 'healed');
+					} else { ////heal
+						//alert('medic added to players hand');
+					}
+				};
+
+				//this doesnt work because card never removed from opp graveyard. but doesnt matter?
+				//currentGameScore[0].graveyard.splice(cardId, 1);
+				// refreshGraveyard();
+
+			} else if(data.horn){
+
+				displayOppHorn(data);
+
+			} else if(data.weather){
+
+				displayOppWeather(data);
+
+			} else if(data.decoy){
+
+				displayOppDecoy(data);
+
+			} else if(data.leader){
+
+				displayOppLeader(data);
+
+			} else if(data.spy){
+
+			 	displayOppSpy(data);
+
+			} else if(data.scorch){
+
+			 	displayOppScorch();
+
+			} else if(data.pass){
+
+				displayOppPass();
+
+			} else {
+
+				addCardToBoard(1, data.card);
+
+			};
+		});	
+
+		function displayOppMove(data, action){
+
+			if(!data.healed){
+				$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponents move.</div><img id="opp-preview" class="card" src="'+data.card.img+'"></div>');
+			} else {
+				$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponents move.</div><img id="opp-preview" class="card" src="'+data.card.img+'"><div class="healed-preview-div"><div class="healed-title">Healed:</div><img id="opp-healed-preview" class="card" src="'+data.healed.img+'"></div></div>');
+			};
+
+			if(action == 'healed'){
+				var time = 3000; 
+			} else {
+				var time = 2000;
+			}
+
+			setTimeout(function(){
+				$('.opp-display-div').remove();
+			}, time);
+
+		};
+
+		function displayOppPass(){
+
+			$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponent Passed.</div></div>');
+
+			$('#arrow-spot0').html('Passed');
+			$('#arrow-spot0').addClass('passed');
+
+			p1Pass = true;
+
+			setTimeout(function(){
+				$('.opp-display-div').remove();
+			}, 1500);
+
+			turnOver();
+
+		};
+
+		function displayOppScorch(){
+			activateScorch(1);
+		};
+
+		function displayOppSpy(data, action){
+			if(action == 'healed'){
+				activateSpy(data.card, 1, action);
+			} else {
+				activateSpy(data.card, 1, 'none');
+			}
+		};
+
+		function displayOppHorn(data){
+			$('#p1hornb'+data.card.row).html('<img class="played-card" src="./cards/horn.png">');
+			$('#p1hornb'+data.card.row).addClass('horn-active');
+
+			horns[0]['horn'+data.card.row] = true;
+
+			var updateData = $('#p'+1+'b'+data.card.row).find('.played-card');
+
+			for (var i = 0; i < gameboard[1][data.card.row-1].length; i++) {
+				$(updateData[i]).attr("data-atk", gameboard[1][data.card.row-1][i].atk);
+			};
+
+			calculateScore();
+			turnOver();
+		};
+
+		function displayOppWeather(data){
+			specialCard(1, data.card);
+		};
+
+		function displayOppLeader(){
+			$('#p1leader').addClass('fade');
+			displayOppHorn({ card: {row: 3} });			
+		};
+
+		function displayOppDecoy(data){
+
+			if(data.card.row == 'none'){
+				alert('opponent wasted decoy');
+			} else {
+				var decoyedCard = $('#p1b'+(parseInt(data.card.row)+1)).find('[data-spot="'+(data.card.spot)+'"]');
+
+				gameboard[0][data.card.row].splice((data.card.spot), 1, {img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0});
+
+				$(decoyedCard).attr("src","./cards/decoy.png");
+				$(decoyedCard).attr("data-id","decoy");
+				$(decoyedCard).attr("data-atk", 0);
+				$(decoyedCard).addClass('hero');
+
+				reactivateTeams();
+				calculateScore();
+			};
+
+			turnOver();	
+
+		};
+
+		var currentTurn;
+
+		function turnOver(){
+
+			if(p2Pass){
+
+				$('#arrow-spot0').fadeIn();
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');
+				$('#pass-block').css('display', 'block');				
+
+			} else if(p1Pass){
+				
+				$('#arrow-spot1').fadeIn();				
+				$('#block').css('display', 'none');
+				$('#king-block').css('display', 'none');	
+				$('#pass-block').css('display', 'none');
+		
+			} else {
+
+				$('#arrow-spot1').fadeOut();
+				$('#arrow-spot0').fadeOut();
+
+				setTimeout(function(){
+
+					if(currentTurn == 1){
+						currentTurn = 0;
+					} else if(currentTurn == 0){
+						currentTurn = 1;
+					};					
+
+					if(currentTurn == me){
+						$('#arrow-spot1').fadeIn();
+						$('#block').css('display', 'none');
+						$('#king-block').css('display', 'none');	
+						$('#pass-block').css('display', 'none');								
+					} else {
+						$('#arrow-spot0').fadeIn();
+						$('#block').css('display', 'block');
+						$('#king-block').css('display', 'block');
+						$('#pass-block').css('display', 'block');					
+					};			
+
+				}, 750);
+
+			};
+
+		};
+
+		socket.on('ingame-waiting', function(){
+
+			$('#pregame-select-div').remove();
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');
+			$('#pass-block').css('display', 'block');			
+			$('#gwent-board').append('<div id="pregame-msg-div"><div id="pregame-select">Waiting for other player.</div></div>');
+
+		});
+
+		var turnOrder;
+		var roundCounter = 1;
+		socket.on('starting', function(data){
+
+			if(data.type == 'new-game'){
+				$('#pregame-select-div').remove();
+
+				var msgCheck = $('#gwent-board').find('#pregame-msg-div');
+
+				if(msgCheck.length == 0){
+					$('#gwent-board').append('<div id="pregame-msg-div"><div id="pregame-select"></div></div>');
+				};
+
+				$('#p1card-count').html('10');
+				$('#p2card-count').html('10');
+
+				if(data.type == 'new-round'){
+					$('.opp-display-div').fadeOut();
+				};
+
+				currentTurn = data.choice;
+
+				if(data.choice == 0){
+					turnOrder = [0,1,0];
+				} else {
+					turnOrder = [1,0,1];
+				};
+
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');	
+				$('#pass-block').css('display', 'block');		
+
+				$('#pregame-select').html('Starting.');
+
+				setTimeout(function(){
+					$('#pregame-msg-div').fadeOut();
+
+					setTimeout(function(){
+						$('#pregame-select').html('Choosing who goes first...');
+						$('#pregame-msg-div').fadeIn();
+
+						setTimeout(function(){
+
+							$('#pregame-select').html(playerData[data.choice].name+' goes first!');
+
+							setTimeout(function(){
+								$('#pregame-msg-div').fadeOut();
+
+								setTimeout(function(){
+
+									$('#pregame-select').html('Begin.');
+									$('#pregame-msg-div').fadeIn();
+
+									setTimeout(function(){
+
+										if(me == data.choice){
+											$('#arrow-spot1').fadeIn();
+											$('#arrow-spot0').fadeOut();
+											$('#block').css('display', 'none');
+											$('#king-block').css('display', 'none');	
+											$('#pass-block').css('display', 'none');								
+										} else {
+											$('#arrow-spot0').fadeIn();
+											$('#arrow-spot1').fadeOut();
+										};
+
+										$('#pregame-msg-div').fadeOut();
+
+										setTimeout(function(){
+
+											$('#pregame-msg-div').remove();
+
+										}, 2000);
+
+									}, 1500);
+
+								}, 1250);
+
+							}, 2000);
+
+						}, 2000);
+
+					}, 1000);
+
+				}, 1000);
+			} else if(data.type == 'new-round'){
+
+				$('#pregame-select-div').remove();
+
+				$('.opp-display-div').fadeOut();
+
+				var msgCheck = $('#gwent-board').find('#pregame-msg-div');
+
+				if(msgCheck.length == 0){
+					$('#gwent-board').append('<div id="pregame-msg-div"><div id="pregame-select"></div></div>');
+				};
+
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');	
+				$('#pass-block').css('display', 'block');		
+
+				$('#pregame-select').html('Starting new round.');
+
+				currentTurn = turnOrder[roundCounter];
+
+				setTimeout(function(){
+					$('#pregame-msg-div').fadeOut();
+
+					setTimeout(function(){
+						$('#pregame-select').html(playerData[turnOrder[roundCounter]].name+' goes first!');
+						$('#pregame-msg-div').fadeIn();
+
+						setTimeout(function(){
+							$('#pregame-msg-div').fadeOut();
+
+							setTimeout(function(){
+
+								$('#pregame-select').html('Begin.');
+
+								$('#pregame-msg-div').fadeIn();
+
+								setTimeout(function(){
+
+									if(me == currentTurn){
+										$('#arrow-spot1').fadeIn();
+										$('#arrow-spot0').fadeOut();
+										$('#block').css('display', 'none');
+										$('#king-block').css('display', 'none');	
+										$('#pass-block').css('display', 'none');								
+									} else {
+										$('#arrow-spot0').fadeIn();
+										$('#arrow-spot1').fadeOut();
+									};
+
+									roundCounter++;
+
+									$('#pregame-msg-div').fadeOut();
+
+									setTimeout(function(){
+
+										$('#pregame-msg-div').remove();
+
+									}, 2000);
+
+								}, 1500);
+
+							}, 1250);
+
+						}, 2000);
+
+					}, 1000);
+
+				}, 1000);				
+
+
+			};
+
+		});
+
+		//IF PLAYER IS DISCONNECTED
+
+		socket.on('dc-check', function(){
+			socket.emit('dc-validate', {player: me});
+		});		
+
+		socket.on('user-dc', function(){
+			alert('other player disconnected.');
+			socket.disconnect();
+			location.replace("./homepage.html");
+		});
+
+	</script>
+	</body>
+</html>
