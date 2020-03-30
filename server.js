@@ -124,16 +124,16 @@
 					};					
 				};
 
-				console.log(p1Id);
-				console.log(p2Id);
+				console.log('id: '+p1Id+' name: '+playerData[p1Id].name+' score: '+p1fScore);
+				console.log('id: '+p2Id+' name: '+playerData[p2Id].name+' score: '+p2fScore);
 
  				if(p1fScore == p2fScore) {
 					io.emit('round-results', {draw: true});
 				} else {
 					if(p1fScore > p2fScore){
-						io.emit('round-results', {player: p2Id, name: playerData[p2Id].name, draw: false});
-					} else {
 						io.emit('round-results', {player: p1Id, name: playerData[p1Id].name, draw: false});
+					} else {
+						io.emit('round-results', {player: p2Id, name: playerData[p2Id].name, draw: false});
 					};
 				};
 
