@@ -801,9 +801,9 @@
 					setupBoard(response);
 					socket.emit('rejoin', 'gwentroom');
 					//player 1 starts dc-check instance
-					if(me == 0){
-						socket.emit('start-dc-check', {});
-					};
+					// if(me == 0){
+					// 	socket.emit('start-dc-check', {});
+					// };
 		        }
 
 			});
@@ -2494,15 +2494,15 @@
 
 		//IF PLAYER IS DISCONNECTED
 
-		socket.on('dc-check', function(){
-			socket.emit('dc-validate', {player: me});
-		});		
+		// socket.on('dc-check', function(){
+		// 	socket.emit('dc-validate', {player: me});
+		// });		
 
-		socket.on('user-dc', function(){
-			alert('other player disconnected.');
-			socket.disconnect();
-			location.replace("./homepage.html");
-		});
+		// socket.on('user-dc', function(){
+		// 	alert('other player disconnected.');
+		// 	socket.disconnect();
+		// 	location.replace("./homepage.html");
+		// });
 
 	</script>
 	</body>

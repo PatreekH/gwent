@@ -159,39 +159,39 @@
 
 
 		//Disconnection check
-		socket.on('start-dc-check', function(data) {
+		// socket.on('start-dc-check', function(data) {
 
-			setInterval(function() {
+		// 	setInterval(function() {
 
-				io.sockets.emit('dc-check', {});
+		// 		io.sockets.emit('dc-check', {});
 
-				setTimeout(function(){
+		// 		setTimeout(function(){
 
-					if(playerStatus.p1here == false || playerStatus.p2here == false){
-						io.sockets.emit('user-dc', {});
-						socket.disconnect();
-					};
+		// 			if(playerStatus.p1here == false || playerStatus.p2here == false){
+		// 				io.sockets.emit('user-dc', {});
+		// 				socket.disconnect();
+		// 			};
 
-					//resets to false for dc check
-					playerStatus.p1here = false;
-					playerStatus.p2here = false;		
+		// 			//resets to false for dc check
+		// 			playerStatus.p1here = false;
+		// 			playerStatus.p2here = false;		
 
-				}, 3000);
+		// 		}, 3000);
 
-			}, 13000);	
+		// 	}, 13000);	
 
-		});
+		// });
 
-		socket.on('dc-validate', function(data) {
+		// socket.on('dc-validate', function(data) {
 
-			if(data.player == 0){
-				playerStatus.p1here = true;
-			};
-			if(data.player == 1){
-				playerStatus.p2here = true;
-			};
+		// 	if(data.player == 0){
+		// 		playerStatus.p1here = true;
+		// 	};
+		// 	if(data.player == 1){
+		// 		playerStatus.p2here = true;
+		// 	};
 
-		});		
+		// });		
 
 	}); 
 
