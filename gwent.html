@@ -1,3 +1,13 @@
+<!-- ERRORS:
+ 	-Double turn glitch
+ 		info: on leader card or maybe on heal card. Sending request over twice check server
+
+ 	-Horn Glitch
+ 		info: not letting user play horn on spot 3 after king has been played on new round
+
+ 	-Reset Error
+ 		info: reset game not working(maybe be related to horn glitch). -->
+
 <html>
 	<head>
 		<title>Gwent</title>
@@ -1914,6 +1924,10 @@
 		});
 
 		function refreshBoard(){
+			horns = [
+				{horn1: false, horn2: false, horn3: false},
+				{horn1: false, horn2: false, horn3: false}
+			];			
 			for (var i = 0; i < currentGameScore.length; i++) {
 				currentGameScore[i].playerTotal = 0;
 				currentGameScore[i].playerScores = [0,0,0];
@@ -1948,12 +1962,6 @@
 			$('#p2b2').removeClass('fog');
 			$('#p1b3').removeClass('rain');
 			$('#p2b3').removeClass('rain');	
-
-			horns = [
-				{horn1: false, horn2: false, horn3: false},
-				{horn1: false, horn2: false, horn3: false}
-			];
-
 			p2Pass = false;
 			p1Pass = false;
 			rain = false;
@@ -2005,6 +2013,12 @@
 					endGameScreen(1);
 				}, 1250);
 			} else { //game continues
+
+				horns = [
+					{horn1: false, horn2: false, horn3: false},
+					{horn1: false, horn2: false, horn3: false}
+				];
+
 				setTimeout(function(){
 				 	$('.opp-display-div').remove();
 
@@ -2198,7 +2212,11 @@
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-			];			
+			];	
+			horns = [
+				{horn1: false, horn2: false, horn3: false},
+				{horn1: false, horn2: false, horn3: false}
+			];	
 			refreshBoard();
 			setupBoard(playerData);
 		};
