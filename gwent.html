@@ -1,9 +1,9 @@
 <!-- ERRORS:
- 	-Double turn glitch
- 		info: on leader card or maybe on heal card. Sending request over twice check server
 
- 	-Reset Error
- 		info: reset game not working(maybe be related to horn glitch). -->
+ 	-Decoy Error
+		info: decoy team member power card doesnt remove score?	
+
+-->
 
 <html>
 	<head>
@@ -782,7 +782,7 @@
 			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
 			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
 		];
 
@@ -949,10 +949,8 @@
 			if(pregameSelect){
 
 				playerHand.splice(cardId, 1);
-				console.log(shuffledDeck);
 				playerHand.push(shuffledDeck[0]);
 				shuffledDeck.splice(0, 1);
-				console.log(shuffledDeck);
 				swaps--;
 				$('#swap-counter').html(swaps);
 				if(swaps == 0){
@@ -1020,7 +1018,9 @@
 						endTurn(newCard, false, false, false, false, false, false, false, false);
 					};
 				} else {
-					turnOver();
+					if(action != 'healed'){
+						turnOver();
+					};
 				}
 			};
 
@@ -1262,8 +1262,6 @@
 			} else {
 				turnOver();
 			};
-
-
 		};
 
 		function refreshCardPositions(){
@@ -1278,7 +1276,6 @@
 							currBattleRow[0].children[x].attributes[4].value = x;
 						};
 					};
-
 				};
 			};
 		};
@@ -1321,9 +1318,7 @@
 				if(action != 'healed'){
 					turnOver();
 				};
-
 			};		
-
 		};
 
 		function specialAttack(player, card, action){
@@ -1563,8 +1558,6 @@
 					currentGameScore[i].graveyard[ii].atk = currentGameScore[i].graveyard[ii].baseAtk;
 				};
 			};
-
-			console.log(currentGameScore);
 
 			if(currentGameScore[0].graveyard.length == 0){
 				$('#graveyard1').empty();				
@@ -2078,7 +2071,6 @@
 			$('#p1dot').css('background-color', 'lime');
 
 			if(p1rematch == true && p2rematch == true){
-				rematching = true;
 				socket.emit('start-rematch', {});
 			};
 
@@ -2122,6 +2114,7 @@
 		function restartGame(){
 			p1rematch = false;
 			p2rematch = false;
+			leaderActivated = false;
 			$('#p1leader').removeClass('fade');	
 			$('#p2leader').removeClass('fade');	
 			$('.end-game-div').remove();
@@ -2205,7 +2198,8 @@
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-			];		
+			];
+			rematching = true;	
 			refreshBoard();
 			setupBoard(playerData);
 		};

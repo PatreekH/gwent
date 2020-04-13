@@ -86,7 +86,6 @@
 		});
 
 		socket.on('rejoin', function(data){
-			console.log(data)
 			socket.join(data);
 		});
 
@@ -95,9 +94,7 @@
 
 			} else {
 				console.log('sending: '+data.card.img);
-				console.log(data);
 			}
-			console.log('=======================================================hit=============================================================')
 			//socket.to('gwentroom').emit('opp-player-turn', data.card);
 			socket.broadcast.emit('opp-player-turn', data);
 			//io.emit('opp-player-turn', data.card);
@@ -105,11 +102,11 @@
 		});
 
 		socket.on('round-over', function(data){
+			console.log('PASSING')
 			socket.broadcast.emit('finish-round', data);
 		});
 
 		socket.on('check-winner', function(data){
-			console.log(data)
 			//check if scores match
 			if(data.p1.p1 == data.p2.p2 && data.p1.p2 == data.p2.p1){
 
