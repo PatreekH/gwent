@@ -1923,11 +1923,7 @@
 
 		});
 
-		function refreshBoard(){
-			horns = [
-				{horn1: false, horn2: false, horn3: false},
-				{horn1: false, horn2: false, horn3: false}
-			];			
+		function refreshBoard(){		
 			for (var i = 0; i < currentGameScore.length; i++) {
 				currentGameScore[i].playerTotal = 0;
 				currentGameScore[i].playerScores = [0,0,0];
@@ -1961,7 +1957,12 @@
 			$('#p1b2').removeClass('fog');
 			$('#p2b2').removeClass('fog');
 			$('#p1b3').removeClass('rain');
-			$('#p2b3').removeClass('rain');	
+			$('#p2b3').removeClass('rain');
+			$('.horns').removeClass('horn-active');
+			horns = [
+				{horn1: false, horn2: false, horn3: false},
+				{horn1: false, horn2: false, horn3: false}
+			];				
 			p2Pass = false;
 			p1Pass = false;
 			rain = false;
@@ -2013,11 +2014,6 @@
 					endGameScreen(1);
 				}, 1250);
 			} else { //game continues
-
-				horns = [
-					{horn1: false, horn2: false, horn3: false},
-					{horn1: false, horn2: false, horn3: false}
-				];
 
 				setTimeout(function(){
 				 	$('.opp-display-div').remove();
@@ -2212,11 +2208,7 @@
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-			];	
-			horns = [
-				{horn1: false, horn2: false, horn3: false},
-				{horn1: false, horn2: false, horn3: false}
-			];	
+			];		
 			refreshBoard();
 			setupBoard(playerData);
 		};
