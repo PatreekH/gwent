@@ -95,7 +95,9 @@
 
 			} else {
 				console.log('sending: '+data.card.img);
+				console.log(data);
 			}
+			console.log('=======================================================hit=============================================================')
 			//socket.to('gwentroom').emit('opp-player-turn', data.card);
 			socket.broadcast.emit('opp-player-turn', data);
 			//io.emit('opp-player-turn', data.card);
