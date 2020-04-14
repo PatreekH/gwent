@@ -2117,7 +2117,10 @@
 		function restartGame(){
 			p1rematch = false;
 			p2rematch = false;
-			leaderActivated = false;
+			leaderActivated = false;			
+			$('#block').css('display', 'none');
+			$('#king-block').css('display', 'none');	
+			$('#pass-block').css('display', 'none');			
 			$('#p1leader').removeClass('fade');	
 			$('#p2leader').removeClass('fade');	
 			$('.end-game-div').remove();
