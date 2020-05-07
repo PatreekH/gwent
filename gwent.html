@@ -454,6 +454,11 @@
 				width: 150px;
 				float: left;
 			}
+			.check-graveyard-cards{
+				height: 300px;
+				width: 150px;
+				float: left;				
+			}
 
 			#graveyard-block{
 				z-index: 7;
@@ -1836,7 +1841,15 @@
 			$('#king-block').css('display', 'block');
 			$('#pass-block').css('display', 'block');
 			selectHeal(this);
-		});				
+		});
+
+		$('#gwent-board').on('click', '#graveyard2', function(){
+			$('#block').css('display', 'block');
+			$('#king-block').css('display', 'block');
+			$('#pass-block').css('display', 'block');
+			clearSelected();
+			displayGraveyardCards();
+		});		
 
 		$('#p2leader').on('click', function(){
 			$("#pass-select-div").remove();
@@ -1849,6 +1862,43 @@
 			activateLeader();
 			//blocks needed here?
 		});
+
+		function displayGraveyardCards(){		
+			if(currentGameScore[1].graveyard.length == 0){
+				if(currentTurn == me){
+					$('#block').css('display', 'none');
+					$('#king-block').css('display', 'none');
+					$('#pass-block').css('display', 'none');
+				} else {
+					$('#block').css('display', 'block');
+					$('#king-block').css('display', 'block');
+					$('#pass-block').css('display', 'block');				
+				};		
+				alert('no units in graveyard');			
+			} else {
+				var graveSelectDiv = '<div id="graveyard-block"><div id="graveyard-heal"><div id="graveyard-select-title">Graveyard - <button class="btn btn-danger" id="close-graveyard">Close Graveyard</button></div><br>';
+				for (var i = 0; i < currentGameScore[1].graveyard.length; i++) {
+					//if(currentGameScore[1].graveyard[i].hero == 0){
+						graveSelectDiv+='<img class="check-graveyard-cards" src="'+currentGameScore[1].graveyard[i].img+'">';
+					//};
+				};
+				graveSelectDiv+='</div></div>';
+				$('#gwent-board').append(graveSelectDiv);
+			};	
+		};
+
+		$('#gwent-board').on('click', '#close-graveyard', function(){
+			$('#graveyard-block').remove();
+			if(currentTurn == me){
+				$('#block').css('display', 'none');
+				$('#king-block').css('display', 'none');
+				$('#pass-block').css('display', 'none');
+			} else {
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');
+				$('#pass-block').css('display', 'block');				
+			};			
+		});		
 
 		function endTurn(card, healed, weather, horn, scorch, decoy, leader, spy, pass){
 
