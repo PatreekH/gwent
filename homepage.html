@@ -8,7 +8,8 @@
 		<style>
 			
 			body{
-				background-color: black;
+				background-image: url('./gwent-bg.jpg');
+				background-repeat: no-repeat;
 			}
 
 			h1{
@@ -19,7 +20,7 @@
 
 			#login-div{
 				text-align: center;
-				height: 300px;
+				height: 325px;
 				width: 188px;
 				background-color: tan;
 				position: absolute;
@@ -37,6 +38,14 @@
 			audio{
 			/*	display: none;*/
 			}
+			.M-text{
+				font-weight: 700;
+				color: red;
+			}
+			.NR-text{
+				font-weight: 700;
+				color: #4169E1;
+			}
 		</style>
 	</head>
 	<body>
@@ -48,8 +57,9 @@
 				<input id="user" type="text" name="name" required>
 				<br>
 				<br>
-				<div><span>Deck1</span><span><input type="radio" name="deck" value="deck1" required></span></div>
-				<div><span>Deck2</span><span><input type="radio" name="deck" value="deck2" required></span></div>
+				<div><span class="NR-text">Northern Realms 1</span><span><input type="radio" name="deck" value="deck1" required></span></div>
+				<div><span class="NR-text">Northern Realms 2</span><span><input type="radio" name="deck" value="deck2" required></span></div>
+				<div><span class="M-text">Monsters</span><span><input type="radio" name="deck" value="deck3" required></span></div>
 				<input class="btn btn-default" id="login" type="submit" value="Sign In">
 			</form>
 		</div>
