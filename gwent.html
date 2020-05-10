@@ -9,6 +9,13 @@
 	-Waiting for player error
 		 info: happens on rematch when you select two cards instead of readying?
 
+	-Muster error
+		info: doesnt delete cards from deck, causing error with healing
+
+	-Cow error
+		numbers jump onto 2nd card because id on card is the same for both
+		heal cow?
+
 -->
 
 <html>
@@ -620,6 +627,39 @@
 				font-size: 20px;
 			}
 
+			.opp-display-div #cowAtk{
+				position: relative;
+				top: -50px;
+				color: red;
+				font-size: 24px;
+				font-weight: 700;
+				left: 96px;				
+			}
+
+			.selected-div #cowAtk{
+				position: relative;
+				top: -50px;
+				color: red;
+				font-size: 24px;
+				font-weight: 700;
+				left: 69px;				
+			}
+
+			.cowClass{
+				color: black;
+				font-weight: 700;
+				font-size: 16px;
+				position: relative;
+			}
+
+			.cowContainer{
+				float: left;
+			}
+
+/*			-try to get number in correct spot without parent container
+			-edit refresh position to ignore spans
+			-console.log scorch values*/
+
 		</style>
 	</head>
 	<body>
@@ -685,43 +725,6 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>	
 
-		var cards = [
-			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
-			{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
-			{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
-			{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
-			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
-			{img: './cards/thaler.png', atk: 1, spec: 'spy', type: 0, hero: 0, baseAtk: 1, realType:3},
-			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
-			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-		];
-
 		var deck1 = [
 			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
@@ -734,6 +737,25 @@
 			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
 			{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
 			{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
@@ -744,6 +766,38 @@
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 			{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
 			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
@@ -751,6 +805,37 @@
 			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
 			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
+			{img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
@@ -800,6 +885,25 @@
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
 			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
 			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
 			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
 			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
@@ -815,13 +919,11 @@
 			{img: './cards/arachas_1.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/arachas_2.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/arachas_3.jpg', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
-
 			{img: './cards/vamp_bruxa.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_ekim.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_fleder.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_gark.jpg', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_kata.png', atk: 5, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 5},	
-
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},			
@@ -1015,7 +1117,9 @@
 				playerHand.splice(cardId, 1);
 
 				//if card is a special card
-				if(playedCard.type == 0){
+				if(playedCard.spec == 'cow'){
+					activateCow(2);
+				} else if(playedCard.type == 0){
 					specialCard(2, playedCard);
 				} else {
 					addCardToBoard(2, playedCard);
@@ -1024,7 +1128,42 @@
 			};
 
 			refreshHand(playerHand);
-			// resizeRows();
+
+		};
+
+		function activateCow(player, card){
+
+			if(player == 2){
+				$('#gwent-board').append('<div class="selected-div"><img class="card selected" src="./cards/cow.png"><span id="cowAtk"></span></div>');				
+				$('#block').css('display', 'block');
+				$('#king-block').css('display', 'block');	
+				$('#pass-block').css('display', 'block');
+			};
+
+			var wheel = 0;
+			var atkValue;
+			var cowAtk = setInterval(function(){
+				atkValue = Math.floor(Math.random() * 6);//21
+				$('#cowAtk').html(atkValue);
+				wheel++;
+				if(wheel == 25){
+					clearInterval(cowAtk);
+					if(player == 1){
+						$('#cowAtk').html(card.atk);
+					};					
+					$('#cowAtk').css("color", "#32CD32");
+					setTimeout(function(){
+						if(player == 2){
+							clearSelected();
+							addCardToBoard(2, {img: './cards/cow.png', atk: atkValue, spec: 'cow', type: 2, hero: 0, baseAtk: atkValue});
+							endTurn({img: './cards/cow.png', atk: atkValue, spec: 'cow', type: 2, hero: 0, baseAtk: atkValue}, false, false, false, false, false, false, false, false, false);	
+						} else {
+							$('.opp-display-div').remove();
+							addCardToBoard(1, {img: './cards/cow.png', atk: card.atk, spec: 'cow', type: 2, hero: 0, baseAtk: card.atk});
+						}
+					}, 1500);			
+				}
+			}, 100);
 
 		};
 
@@ -1033,10 +1172,14 @@
 			for (var i = 1; i < 3; i++) {
 				for (var ii = 1; ii < 4; ii++) {
 					var currRow = $('#p'+i+'b'+ii+' img').length;
-					if(currRow > 7){
-						$('#p'+i+'b'+ii+' img').css('marginRight', '-30px');
+					if(currRow > 13){
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-50px');
+					} else if(currRow > 11){
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-45px');
 					} else if(currRow > 9){
 						$('#p'+i+'b'+ii+' img').css('marginRight', '-40px');
+					} else if(currRow > 7){
+						$('#p'+i+'b'+ii+' img').css('marginRight', '-30px');
 					} else {
 						$('#p'+i+'b'+ii+' img').css('marginRight', '-18px');
 					}
@@ -1044,6 +1187,8 @@
 			};
 
 		};
+
+		var cowId = 1;
 
 		function addCardToBoard(player, newCard, action){
 
@@ -1057,7 +1202,18 @@
 
 			gameboard[(player-1)][newCard.type-1].push(newCard);
 
-			$('#p'+player+'b'+newCard.type).append('<img data-id="'+newCard.spec+'" data-base="'+newCard.baseAtk+'" data-atk="'+newCard.atk+'" data-row="'+(newCard.type-1)+'" data-spot="'+(gameboard[player-1][newCard.type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+newCard.img+'">');			
+			if(newCard.spec == 'cow'){
+				$('#p'+player+'b'+newCard.type).append('<span class="cowId-'+cowId+' cowContainer"><img data-id="'+newCard.spec+'" data-base="'+newCard.baseAtk+'" data-atk="'+newCard.atk+'" data-row="'+(newCard.type-1)+'" data-spot="'+(gameboard[player-1][newCard.type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+newCard.img+'"><span class="cowClass" id="cowId-'+cowId+'">'+newCard.atk+'</span></span>');
+				$("#cowId-"+cowId).css('top', '-4px');
+				if(newCard.atk > 9){
+					$("#cowId-"+cowId).css('right', '50px');
+				} else {
+					$("#cowId-"+cowId).css('right', '46px');
+				};
+				cowId++;
+			} else {
+				$('#p'+player+'b'+newCard.type).append('<img data-id="'+newCard.spec+'" data-base="'+newCard.baseAtk+'" data-atk="'+newCard.atk+'" data-row="'+(newCard.type-1)+'" data-spot="'+(gameboard[player-1][newCard.type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+newCard.img+'">');		
+			};	
 
 			if(newCard.spec != 'none'){
 				if(action == 'healed'){
@@ -1122,9 +1278,6 @@
 					rain = true;
 					activateWeather('rain', 2, player, card);
 				};	
-
-				// rain = true;
-				// activateWeather('rain', 2, player, card);
 
 			} else if(card.spec == 'scorch'){
 
@@ -1274,6 +1427,30 @@
 
 			var filterEle = element.not(".hero");
 
+			console.log(filterEle);
+
+			var currScorchedAtk = filterEle[0].attributes[2].value;
+
+			var cowSpans = $('.cowClass').contents();
+
+			console.log(cowSpans);
+
+			if(cowSpans.lengh > 1){
+				for (var i = 0; i < cowSpans.length; i++) {
+					console.log(cowSpans[i].data);
+					console.log(currScorchedAtk);
+					if(cowSpans[i].data == currScorchedAtk){
+						$('#'+cowSpans[i].prevObject[0].attributes[1].value).remove();
+						$('.'+cowSpans[i].prevObject[0].attributes[1].value).remove();
+					};
+				};
+			} else {
+				if(cowSpans[0].data == currScorchedAtk){
+					$('#'+cowSpans.prevObject[0].attributes[1].value).remove();
+					$('.'+cowSpans.prevObject[0].attributes[1].value).remove();
+				};
+			};
+
 			$(filterEle).fadeOut();
 
 			var timer = setTimeout(function(){
@@ -1421,28 +1598,35 @@
 
 			} else if(card.spec == 'muster'){
 
-				activateMuster(card.musterNum);
+				if(player == 2){
+					activateMuster(card.musterNum, card, action);
+				};
 
-				// if(player == 2){
-				// 	endTurn(card, false, false, false, false, false, false, false, false, true);
-				// } else {
-				// 	turnOver();
-				// };
+			} else if(card.spec == 'cow'){
+
+				if(player == 2){
+					//already done
+				} else {
+					turnOver();
+				}
 
 			};
 
 		};
 
-		function activateMuster(musterId){
+		function activateMuster(musterId, playedMusterCard, action){
 
 			var currentMuster = [];
+			var deckSplice = [];
+			var handSplice = [];
 
 			for (var i = 0; i < shuffledDeck.length; i++) {
 				if(shuffledDeck[i].spec == 'muster'){
 					if(shuffledDeck[i].musterNum == musterId){
 						console.log(shuffledDeck[i])
 						currentMuster.push(shuffledDeck[i]);
-						shuffledDeck.splice(i, 1);
+						deckSplice.push(i);
+						//shuffledDeck.splice(i, 1);
 					};
 				};
 			};
@@ -1452,7 +1636,8 @@
 					if(playerHand[i].musterNum == musterId){
 						console.log(playerHand[i])
 						currentMuster.push(playerHand[i]);
-						playerHand.splice(i, 1);
+						handSplice.push(i);
+						//playerHand.splice(i, 1);
 					};
 				};
 			};
@@ -1465,8 +1650,26 @@
 
 			};
 
+			console.log(shuffledDeck, 'pdeck');
+			console.log(playerHand, 'phand');
+			//removes cards from hand and deck after selection
+			for (var i = 0; i < deckSplice.length; i++) {
+				shuffledDeck.splice(deckSplice[i], 1);
+			};
+			for (var i = 0; i < handSplice.length; i++) {
+				playerHand.splice(handSplice[i], 1);
+			};
+			console.log(shuffledDeck, 'pdeck - after');
+			console.log(playerHand, 'phand - after');						
+
 			refreshHand(playerHand);
 			calculateScore();
+
+			currentMuster.push(playedMusterCard);
+
+			if(action != 'healed'){
+				endTurn(playedMusterCard, false, false, false, false, false, false, false, false, currentMuster);
+			};
 
 			console.log(currentMuster);
 		};
@@ -2037,8 +2240,8 @@
 
 		socket.on('finish-round', function(data){
 
-				var allScores = {p1: {name: data.name, p1: data.p1, p2: data.p2}, p2: {name: playerData[me].name, p1: currentGameScore[0].playerTotal, p2: currentGameScore[1].playerTotal}};
-				socket.emit('check-winner', allScores);
+			var allScores = {p1: {name: data.name, p1: data.p1, p2: data.p2}, p2: {name: playerData[me].name, p1: currentGameScore[0].playerTotal, p2: currentGameScore[1].playerTotal}};
+			socket.emit('check-winner', allScores);
 
 		});
 
@@ -2311,28 +2514,24 @@
 		function resetDecks(){
 			deck1 = [
 				{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-				{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-				{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-				{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
 				{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
 				{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-				{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
 				{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
 				{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-				{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
-				{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
 				{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
 				{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
 				{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
+				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
@@ -2342,6 +2541,7 @@
 				{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 				{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
 				{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
+				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
 			];
@@ -2354,20 +2554,20 @@
 				{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
 				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+				{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 				{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-				{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 				{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
 				{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
 				{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-				{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
-				{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
 				{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
 				{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
 				{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
+				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
@@ -2403,13 +2603,18 @@
 				{img: './cards/arachas_1.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
 				{img: './cards/arachas_2.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
 				{img: './cards/arachas_3.jpg', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
+				{img: './cards/vamp_bruxa.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
+				{img: './cards/vamp_ekim.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
+				{img: './cards/vamp_fleder.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
+				{img: './cards/vamp_gark.jpg', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
+				{img: './cards/vamp_kata.png', atk: 5, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 5},	
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},			
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 				{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-			];		
+			];			
 		};
 
 		var oppPackage;
@@ -2464,6 +2669,10 @@
 
 			 	displayOppSpy(data);
 
+			} else if(data.muster != false){
+
+				displayOppMuster(data.muster);
+
 			} else if(data.scorch){
 
 			 	displayOppScorch();
@@ -2472,30 +2681,54 @@
 
 				displayOppPass();
 
+			} else if(data.card.spec == 'cow'){
+
 			} else {
 
 				addCardToBoard(1, data.card);
 
 			};
-		});	
+		});
+
+		function displayOppMuster(muster){
+
+			for (var i = 0; i < muster.length; i++) {
+
+				gameboard[0][muster[i].type-1].push(muster[i]);
+
+				$('#p1b'+muster[i].type).append('<img data-id="'+muster[i].spec+'" data-base="'+muster[i].baseAtk+'" data-atk="'+muster[i].atk+'" data-row="'+(muster[i].type-1)+'" data-spot="'+(gameboard[1][muster[i].type-1].length-1)+'" class="played-card my-card" src="'+muster[i].img+'">');
+
+			};
+
+			resizeRows();
+			calculateScore();
+			turnOver();
+
+		};
 
 		function displayOppMove(data, action){
 
-			if(!data.healed){
+			if(data.card.spec == 'cow'){
+				$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponents move.</div><img id="opp-preview" class="card" src="'+data.card.img+'"><span id="cowAtk"></span></div>');
+			} else if(!data.healed){
 				$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponents move.</div><img id="opp-preview" class="card" src="'+data.card.img+'"></div>');
 			} else {
 				$('#gwent-board').append('<div class="opp-display-div"><div id="opp-display">Opponents move.</div><img id="opp-preview" class="card" src="'+data.card.img+'"><div class="healed-preview-div"><div class="healed-title">Healed:</div><img id="opp-healed-preview" class="card" src="'+data.healed.img+'"></div></div>');
 			};
 
-			if(action == 'healed'){
-				var time = 3000; 
-			} else {
-				var time = 2000;
-			}
+			if(data.card.spec != 'cow'){
+				if(action == 'healed'){
+					var time = 3000; 
+				} else {
+					var time = 2000;
+				}
 
-			setTimeout(function(){
-				$('.opp-display-div').remove();
-			}, time);
+				setTimeout(function(){
+					$('.opp-display-div').remove();
+				}, time);
+			} else {
+				activateCow(1, data.card)
+			}
 
 		};
 
