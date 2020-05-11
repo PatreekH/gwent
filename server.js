@@ -145,6 +145,10 @@
 			io.emit('starting', {type: data.type});
 		});
 
+		socket.on('monster-card', function(data){
+			io.emit('monster-remain', {monster: data.card});
+		});		
+
 		socket.on('rematch-rdy', function(data){
 			socket.broadcast.emit('opp-rematch-rdy', {});
 		});

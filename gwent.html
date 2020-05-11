@@ -21,7 +21,7 @@
 		-cow heal?
 
 	-Monster error
-		info: 2175, add new reward system based on deck
+		info: what happens to reward if only herod left?
 
 -->
 
@@ -729,10 +729,12 @@
 	<script>	
 
 		var deck1 = [
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
 			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
@@ -757,11 +759,13 @@
 			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
 			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
 		];
 
+		// {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+		// {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0}
+		// {img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0}
+		// {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0}
 		// {img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
 
 		var deck2 = [
@@ -830,7 +834,9 @@
 			{img: './cards/vamp_fleder.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_gark.jpg', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
 			{img: './cards/vamp_kata.png', atk: 5, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 5},	
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},			
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},	
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
@@ -2127,7 +2133,11 @@
 				$('#king-block').css('display', 'block');
 				$('#pass-block').css('display', 'block');				
 			};			
-		});		
+		});	
+
+		var monsterWin = false;
+		var monsterWinner;
+		var monsterRemain;	
 
 		function endTurn(card, healed, weather, horn, scorch, decoy, leader, spy, pass, muster){
 
@@ -2175,43 +2185,28 @@
 
 				setTimeout(function(){
 
-
-					console.log(data, 'BROOOOOOOOOO');
-
-					console.log(playerData[data.id].deck);
-
-					if(playerData[data.id].deck == 'deck3' || playerData[data.id].deck == 'deck4'){
+					if(playerData[data.player].deck == 'deck3' || playerData[data.player].deck == 'deck4'){
 
 						$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' has <span class="plus1">1</span> card stay on the field!</div></div>');
 
-						var randomSelect = [];
+						if(data.player == me){
 
-						for (var i = 0; i < gameboard[data.id].length; i++) {
-							for (var ii = 0; ii < gameboard[data.id][i].length; ii++) {
-								console.log(gameboard[data.id][i][ii], 'hereeeee');
-								if(gameboard[data.id][i][ii].hero == 0){
-									randomSelect.push(gameboard[data.id][i][ii]);
+							var randomSelect = [];
+
+							for (var i = 0; i < gameboard[data.player].length; i++) {
+								for (var ii = 0; ii < gameboard[data.player][i].length; ii++) {
+									if(gameboard[data.player][i][ii].hero == 0){
+										randomSelect.push(gameboard[data.player][i][ii]);
+									};
 								};
 							};
+
+							var selectedUnit = randomSelect[Math.floor(Math.random() * randomSelect.length)];
+							socket.emit('monster-card', {card: selectedUnit});
 						};
 
-						var selectedUnit = randomSelect[Math.floor(Math.random() * randomSelect.length)];
-
-						if(data.id == me){
-
-							gameboard[2][selectedUnit.type-1].push(selectedUnit);
-
-							$('#p2b'+selectedUnit.type).append('<img data-id="'+selectedUnit.spec+'" data-base="'+selectedUnit.baseAtk+'" data-atk="'+selectedUnit.atk+'" data-row="'+(selectedUnit.type-1)+'" data-spot="'+(gameboard[2][selectedUnit.type-1].length-1)+'" class="played-card my-card" src="'+selectedUnit.img+'">');							
-
-						} else {
-
-							gameboard[1][selectedUnit.type-1].push(selectedUnit);
-
-							$('#p2b'+selectedUnit.type).append('<img data-id="'+selectedUnit.spec+'" data-base="'+selectedUnit.baseAtk+'" data-atk="'+selectedUnit.atk+'" data-row="'+(selectedUnit.type-1)+'" data-spot="'+(gameboard[1][selectedUnit.type-1].length-1)+'" class="played-card my-card" src="'+selectedUnit.img+'">');
-
-						};
-
-						calculateScore();
+						monsterWin = true;
+						monsterWinner = {player: data.player}
 
 					} else {
 						$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' gets <span class="plus1">+1</span> card!</div></div>');
@@ -2235,6 +2230,12 @@
 
 		});
 
+		var monsterRemain;
+
+		socket.on('monster-remain', function(data){
+			monsterRemain = data.monster;
+		});
+
 		function refreshBoard(){		
 			for (var i = 0; i < currentGameScore.length; i++) {
 				currentGameScore[i].playerTotal = 0;
@@ -2254,7 +2255,7 @@
 								[],
 								[]
 							]
-						];			
+						];
 			$('#arrow-spot1').html('');
 			$('#arrow-spot1').removeClass('passed');					
 			$('#arrow-spot0').html('');
@@ -2279,8 +2280,28 @@
 			p1Pass = false;
 			rain = false;
 			fog = false;
-			frost = false;	
+			frost = false;
+			console.log(monsterWinner, 'monsterWinner');
+			console.log(monsterWin, 'monsterWin');
+			console.log(monsterRemain, 'monsterRemain');
+			if(monsterWin == true){
+				if(monsterWinner.player == me){
 
+					gameboard[1][monsterRemain.type-1].push(monsterRemain);
+
+					$('#p2b'+monsterRemain.type).append('<img data-id="'+monsterRemain.spec+'" data-base="'+monsterRemain.baseAtk+'" data-atk="'+monsterRemain.atk+'" data-row="'+(monsterRemain.type-1)+'" data-spot="'+(gameboard[1][monsterRemain.type-1].length-1)+'" class="played-card my-card" src="'+monsterRemain.img+'">');							
+
+				} else {
+
+					gameboard[0][monsterRemain.type-1].push(monsterRemain);
+
+					$('#p1b'+monsterRemain.type).append('<img data-id="'+monsterRemain.spec+'" data-base="'+monsterRemain.baseAtk+'" data-atk="'+monsterRemain.atk+'" data-row="'+(monsterRemain.type-1)+'" data-spot="'+(gameboard[0][monsterRemain.type-1].length-1)+'" class="played-card my-card" src="'+monsterRemain.img+'">');
+
+				};
+				calculateScore();
+				monsterWin = false;				
+			};
+			console.log(gameboard, 'gameboard');				
 		};
 
 		function updateGems(scorer){
