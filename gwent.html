@@ -10,7 +10,7 @@
 		 info: happens on rematch when you select two cards instead of readying?
 
 	-Muster error
-		info: doesnt delete cards from deck, causing error with healing
+		info: error with crones not all getting pulled on 2nd round?
 
 	-Cow error
 		numbers dont delete after scorch
@@ -19,6 +19,9 @@
 		-console.log scorch values to fix scortch issue
 		-rearrange if statement to allow for scorch if cows dont exist
 		-cow heal?
+
+	-Monster error
+		info: 2175, add new reward system based on deck
 
 -->
 
@@ -2172,16 +2175,56 @@
 
 				setTimeout(function(){
 
-					$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' gets <span class="plus1">+1</span> card!</div></div>');
 
-					//gives +1 card to winner
-					if(playerData[me].name == data.name){
-						playerHand.push(shuffledDeck[0]);
-						shuffledDeck.splice(0, 1);
-						refreshHand(playerHand);
+					console.log(data, 'BROOOOOOOOOO');
+
+					console.log(playerData[data.id].deck);
+
+					if(playerData[data.id].deck == 'deck3' || playerData[data.id].deck == 'deck4'){
+
+						$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' has <span class="plus1">1</span> card stay on the field!</div></div>');
+
+						var randomSelect = [];
+
+						for (var i = 0; i < gameboard[data.id].length; i++) {
+							for (var ii = 0; ii < gameboard[data.id][i].length; ii++) {
+								console.log(gameboard[data.id][i][ii], 'hereeeee');
+								if(gameboard[data.id][i][ii].hero == 0){
+									randomSelect.push(gameboard[data.id][i][ii]);
+								};
+							};
+						};
+
+						var selectedUnit = randomSelect[Math.floor(Math.random() * randomSelect.length)];
+
+						if(data.id == me){
+
+							gameboard[2][selectedUnit.type-1].push(selectedUnit);
+
+							$('#p2b'+selectedUnit.type).append('<img data-id="'+selectedUnit.spec+'" data-base="'+selectedUnit.baseAtk+'" data-atk="'+selectedUnit.atk+'" data-row="'+(selectedUnit.type-1)+'" data-spot="'+(gameboard[2][selectedUnit.type-1].length-1)+'" class="played-card my-card" src="'+selectedUnit.img+'">');							
+
+						} else {
+
+							gameboard[1][selectedUnit.type-1].push(selectedUnit);
+
+							$('#p2b'+selectedUnit.type).append('<img data-id="'+selectedUnit.spec+'" data-base="'+selectedUnit.baseAtk+'" data-atk="'+selectedUnit.atk+'" data-row="'+(selectedUnit.type-1)+'" data-spot="'+(gameboard[1][selectedUnit.type-1].length-1)+'" class="played-card my-card" src="'+selectedUnit.img+'">');
+
+						};
+
+						calculateScore();
+
 					} else {
-						var updatedCardCount = oppPackage.cardsLeft+=1;
-						$('#p1card-count').html(updatedCardCount);
+						$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' gets <span class="plus1">+1</span> card!</div></div>');
+
+						//gives +1 card to winner
+						if(playerData[me].name == data.name){
+							playerHand.push(shuffledDeck[0]);
+							shuffledDeck.splice(0, 1);
+							refreshHand(playerHand);
+						} else {
+							var updatedCardCount = oppPackage.cardsLeft+=1;
+							$('#p1card-count').html(updatedCardCount);
+						};
 					};
 
 					updateGems(data.player);
