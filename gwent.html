@@ -1018,6 +1018,7 @@
 				playerHand.splice(cardId, 1);
 				playerHand.push(shuffledDeck[0]);
 				shuffledDeck.splice(0, 1);
+				shuffledDeck.push(playedCard);
 				swaps--;
 				$('#swap-counter').html(swaps);
 				if(swaps == 0){
@@ -2281,9 +2282,6 @@
 			rain = false;
 			fog = false;
 			frost = false;
-			console.log(monsterWinner, 'monsterWinner');
-			console.log(monsterWin, 'monsterWin');
-			console.log(monsterRemain, 'monsterRemain');
 			if(monsterWin == true){
 				if(monsterWinner.player == me){
 
