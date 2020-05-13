@@ -963,6 +963,7 @@
 		};
 
 		$('#gwent-board').on('click', '#skip-swap', function(){
+			shuffledDeck = shuffle(shuffledDeck);
 			playerIsReady();
 		});
 
@@ -1022,6 +1023,7 @@
 				swaps--;
 				$('#swap-counter').html(swaps);
 				if(swaps == 0){
+					shuffledDeck = shuffle(shuffledDeck);
 					playerIsReady();
 				};
 
