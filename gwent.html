@@ -8,9 +8,7 @@
 
 	-Waiting for player error
 		 info: happens on rematch when you select two cards instead of readying?
-
-	-Muster error
-		info: error with crones not all getting pulled on 2nd round?
+		 still happening?
 
 	-Cow error
 		numbers dont delete after scorch
@@ -21,10 +19,16 @@
 		-cow heal?
 
 	-Monster error
-		info: what happens to reward if only herod left?
+		info: what happens to reward if only heros left?
 		info: if monster win, reset board doesnt work
-		info: reset board, monster deck not reset?
+		info: monster snatching card off other players board
 
+	-Spy Glitch
+		info: spy deocyed during weather, stays atk level 1 when replayed
+	
+	-KING GLITCH
+		info: have king weather cards PULL FROM DECK
+		info: create new functionality
 -->
 
 <html>
@@ -459,8 +463,7 @@
 				height: 88px;
 				width: 69px;
 				float: left;
-				margin-right: -18px;
-				background-color: white;				
+				margin-right: -18px;			
 			}
 			.weather-card{
 				border-radius: 5px;
@@ -845,7 +848,24 @@
 			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
 		];
 
+		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
+		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
+		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
+		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
+		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
+		// {img: './cards/alpha_beowolf.png', atk: 6, spec: 'muster', musterNum: 4, type: 3, hero: 1, baseAtk: 6},		
+
 		var deck4 = [];
+
+		var kings = [
+			{id: 'm1', type: 'monster', spec: 'horn-1', img: './cards/monster-leader.jpg'},
+			{id: 'm2', type: 'monster', spec: 'heal', img: './cards/monster-leader2.jpg'},
+			{id: 'm3', type: 'monster', spec: 'weather-any', img: './cards/monster-leader3.jpg'},
+			{id: 'nr1', type: 'northrealm', spec: 'horn-3', img: './cards/leader.png'},
+			{id: 'nr2', type: 'northrealm', spec: 'weather-any', img: './cards/nr-leader2.jpg'},
+			{id: 'nr3', type: 'northrealm', spec: 'clear', img: './cards/nr-leader3.png'},
+			{id: 'g1', type: 'grim', spec: 'weather-3', img: './cards/grim/king_salem.png'}
+		];
 
 		var playerData = [];
 
@@ -890,15 +910,8 @@
 			for (var i = 0; i < data.length; i++) {
 				if(data[i].id == me){
 					$('#p2name').html(data[i].name);
-					if(data[i].deck == 'deck1'){
-						myDeck = deck1;
-					} else if(data[i].deck == 'deck2'){
-						myDeck = deck2;
-					} else if(data[i].deck == 'deck3'){
-						myDeck = deck3;
-					} else if(data[i].deck == 'deck4'){
-						myDeck = deck4;
-					}
+					myDeck = data[i].deck;
+					playerData[me].king
 				} else {
 					$('#p1name').html(data[i].name);
 				}
@@ -1088,7 +1101,7 @@
 		};
 
 		function resizeRows(){
-
+			//1912
 			for (var i = 1; i < 3; i++) {
 				for (var ii = 1; ii < 4; ii++) {
 					var currRow = $('#p'+i+'b'+ii+' img').length;
@@ -1121,7 +1134,7 @@
 			};
 
 			gameboard[(player-1)][newCard.type-1].push(newCard);
-
+			//1912
 			if(newCard.spec == 'cow'){
 				$('#p'+player+'b'+newCard.type).append('<span class="cowId-'+cowId+' cowContainer"><img data-id="'+newCard.spec+'" data-base="'+newCard.baseAtk+'" data-atk="'+newCard.atk+'" data-row="'+(newCard.type-1)+'" data-spot="'+(gameboard[player-1][newCard.type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+newCard.img+'"><span class="cowClass" id="cowId-'+cowId+'">'+newCard.atk+'</span></span>');
 				$("#cowId-"+cowId).css('top', '-4px');
@@ -1216,76 +1229,80 @@
 				setupHorn();
 
 			} else if(card.spec == 'clear'){
-
-				if(frost){
-					var p1Frestore = $('#p1b1').find('.played-card');
-					var p2Frestore = $('#p2b1').find('.played-card');
-					for (var i = 0; i < p1Frestore.length; i++) {
-						var resetAtk = $(p1Frestore[i]).attr("data-base");
-						$(p1Frestore[i]).attr("data-atk", resetAtk);
-					};
-					for (var i = 0; i < p2Frestore.length; i++) {
-						var resetAtk = $(p2Frestore[i]).attr("data-base");
-						$(p2Frestore[i]).attr("data-atk", resetAtk);
-					};	
-				};
-				if(fog){
-					var p1Fgrestore = $('#p1b2').find('.played-card');
-					var p2Fgrestore = $('#p2b2').find('.played-card');
-					for (var i = 0; i < p1Fgrestore.length; i++) {
-						var resetAtk = $(p1Fgrestore[i]).attr("data-base");
-						$(p1Fgrestore[i]).attr("data-atk", resetAtk);
-					};
-					for (var i = 0; i < p2Fgrestore.length; i++) {
-						var resetAtk = $(p2Fgrestore[i]).attr("data-base");
-						$(p2Fgrestore[i]).attr("data-atk", resetAtk);
-					};	
-				};
-				if(rain){
-					var p1Rrestore = $('#p1b3').find('.played-card');
-					var p2Rrestore = $('#p2b3').find('.played-card');
-					for (var i = 0; i < p1Rrestore.length; i++) {
-						var resetAtk = $(p1Rrestore[i]).attr("data-base");
-						$(p1Rrestore[i]).attr("data-atk", resetAtk);
-					};
-					for (var i = 0; i < p2Rrestore.length; i++) {
-						var resetAtk = $(p2Rrestore[i]).attr("data-base");
-						$(p2Rrestore[i]).attr("data-atk", resetAtk);
-					};					
-				};
-
-				frost = false;
-				fog = false;
-				rain = false;
-
-				for (var i = 0; i < gameboard.length; i++) {
-					for (var ii = 0; ii < gameboard[i].length; ii++) {
-						for (var iii = 0; iii < gameboard[i][ii].length; iii++) {
-							gameboard[i][ii][iii].atk = gameboard[i][ii][iii].baseAtk;
-						};
-					};
-				};
-
-				reactivateTeams();
-
-				$('#p1b1').removeClass('frost');
-				$('#p2b1').removeClass('frost');
-				$('#p1b2').removeClass('fog');
-				$('#p2b2').removeClass('fog');
-				$('#p1b3').removeClass('rain');
-				$('#p2b3').removeClass('rain');
-				$('#weather').html('');
-
-				if(player == 2){
-					endTurn(card, false, true, false, false, false, false, false, false, false);
-				} else {
-					turnOver();
-				};					
+				
+				clearWeather(player, card);					
 
 			};		
 
 			calculateScore();
 
+		};
+
+		function clearWeather(player, card){
+			if(frost){
+				var p1Frestore = $('#p1b1').find('.played-card');
+				var p2Frestore = $('#p2b1').find('.played-card');
+				for (var i = 0; i < p1Frestore.length; i++) {
+					var resetAtk = $(p1Frestore[i]).attr("data-base");
+					$(p1Frestore[i]).attr("data-atk", resetAtk);
+				};
+				for (var i = 0; i < p2Frestore.length; i++) {
+					var resetAtk = $(p2Frestore[i]).attr("data-base");
+					$(p2Frestore[i]).attr("data-atk", resetAtk);
+				};	
+			};
+			if(fog){
+				var p1Fgrestore = $('#p1b2').find('.played-card');
+				var p2Fgrestore = $('#p2b2').find('.played-card');
+				for (var i = 0; i < p1Fgrestore.length; i++) {
+					var resetAtk = $(p1Fgrestore[i]).attr("data-base");
+					$(p1Fgrestore[i]).attr("data-atk", resetAtk);
+				};
+				for (var i = 0; i < p2Fgrestore.length; i++) {
+					var resetAtk = $(p2Fgrestore[i]).attr("data-base");
+					$(p2Fgrestore[i]).attr("data-atk", resetAtk);
+				};	
+			};
+			if(rain){
+				var p1Rrestore = $('#p1b3').find('.played-card');
+				var p2Rrestore = $('#p2b3').find('.played-card');
+				for (var i = 0; i < p1Rrestore.length; i++) {
+					var resetAtk = $(p1Rrestore[i]).attr("data-base");
+					$(p1Rrestore[i]).attr("data-atk", resetAtk);
+				};
+				for (var i = 0; i < p2Rrestore.length; i++) {
+					var resetAtk = $(p2Rrestore[i]).attr("data-base");
+					$(p2Rrestore[i]).attr("data-atk", resetAtk);
+				};					
+			};
+
+			frost = false;
+			fog = false;
+			rain = false;
+
+			for (var i = 0; i < gameboard.length; i++) {
+				for (var ii = 0; ii < gameboard[i].length; ii++) {
+					for (var iii = 0; iii < gameboard[i][ii].length; iii++) {
+						gameboard[i][ii][iii].atk = gameboard[i][ii][iii].baseAtk;
+					};
+				};
+			};
+
+			reactivateTeams();
+
+			$('#p1b1').removeClass('frost');
+			$('#p2b1').removeClass('frost');
+			$('#p1b2').removeClass('fog');
+			$('#p2b2').removeClass('fog');
+			$('#p1b3').removeClass('rain');
+			$('#p2b3').removeClass('rain');
+			$('#weather').html('');
+
+			if(player == 2){
+				endTurn(card, false, true, false, false, false, false, false, false, false);
+			} else {
+				turnOver();
+			};			
 		};
 
 		function activateWeather(type, row, player, card){
@@ -1421,6 +1438,7 @@
 			for (var i = 0; i < gameboard.length; i++) {
 				for (var ii = 0; ii < gameboard[i].length; ii++) {
 
+					//1912
 					currRowLength = $('#p'+(i+1)+'b'+(ii+1)+' img').length;
 					var currBattleRow = $('#p'+(i+1)+'b'+(ii+1));
 
@@ -1536,12 +1554,12 @@
 			};
 
 		};
-
+		
 		function activateMuster(musterId, playedMusterCard, action){
 
 			var currentMuster = [];
 			var deckSplice = [];
-			var handSplice = [];
+			var handSplice = [];		
 
 			for (var i = 0; i < shuffledDeck.length; i++) {
 				if(shuffledDeck[i].spec == 'muster'){
@@ -1567,9 +1585,17 @@
 
 			for (var i = 0; i < currentMuster.length; i++) {
 
+				var hero = heroCheck(currentMuster[i]);
+
+				if(hero){
+					var heroClass = "hero";
+				} else {
+					var heroClass = "";
+				};	
+
 				gameboard[1][currentMuster[i].type-1].push(currentMuster[i]);
 
-				$('#p2b'+currentMuster[i].type).append('<img data-id="'+currentMuster[i].spec+'" data-base="'+currentMuster[i].baseAtk+'" data-atk="'+currentMuster[i].atk+'" data-row="'+(currentMuster[i].type-1)+'" data-spot="'+(gameboard[1][currentMuster[i].type-1].length-1)+'" class="played-card my-card" src="'+currentMuster[i].img+'">');
+				$('#p2b'+currentMuster[i].type).append('<img data-id="'+currentMuster[i].spec+'" data-base="'+currentMuster[i].baseAtk+'" data-atk="'+currentMuster[i].atk+'" data-row="'+(currentMuster[i].type-1)+'" data-spot="'+(gameboard[1][currentMuster[i].type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+currentMuster[i].img+'">');
 
 			};
 
@@ -1734,7 +1760,7 @@
 			{horn1: false, horn2: false, horn3: false},
 			{horn1: false, horn2: false, horn3: false}
 		];
-		function activateHorn(id, type, leaderType){
+		function activateHorn(id, type, leaderURL){
 
 			horns[1]['horn'+id] = true;
 
@@ -1747,17 +1773,6 @@
 			if(type == 'reg'){
 				endTurn({img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0, row: id}, false, false, true, false, false, false, false, false, false);
 			} else if (type == 'leader'){
-
-				if(leaderType == 'north'){
-
-					var leaderURL = './cards/leader.png';
-
-				} else if(leaderType == 'monster'){
-
-					var leaderURL = './cards/monster-leader.jpg';
-
-				};
-
 				endTurn({img: leaderURL, atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0, row: id}, false, false, false, false, false, true, false, false, false);
 			};
 
@@ -1958,33 +1973,49 @@
 
 		var leaderActivated = false;
 
-		function playLeader(){
-			var currentLeader;
-			if(playerData[me].deck == 'deck1' || playerData[me].deck == 'deck2'){
-				currentLeader = './cards/leader.png';
-			} else if (playerData[me].deck == 'deck3' || playerData[me].deck == 'deck4'){
-				currentLeader = './cards/monster-leader.jpg';
+		function playLeader(currentKing){
+
+			for (var i = 0; i < kings.length; i++) {
+				if(kings[i].id == currentKing){
+					var currKingImg = kings[i].img;
+				};
 			};
 
 			if(!leaderActivated){
-				$('#gwent-board').append('<div class="selected-div"><img class="card selected" src="'+currentLeader+'"><button id="confirm-play-leader" class="btn-success btn">Play</button><button id="cancel-play" class="btn-danger btn">Cancel</button></div>');	
+				$('#gwent-board').append('<div class="selected-div"><img class="card selected" src="'+currKingImg+'"><button id="confirm-play-leader" class="btn-success btn">Play</button><button id="cancel-play" class="btn-danger btn">Cancel</button></div>');	
 			};
 		};
 
-		function activateLeader(type){
+		function activateLeader(king){
 			leaderActivated = true;
 			clearSelected();
-			if(type == 'north'){
-				var currHorn = 3;
-				var leaderType = 'north';
-			} else if (type == 'monster'){
-				var currHorn = 1;
-				var leaderType = 'monster';
+
+			var kingPowerSplit = king.spec.split('-');
+			console.log(kingPowerSplit);
+			var kingType = kingPowerSplit[0];
+			var kingSpot = kingPowerSplit[1];
+
+			if(kingType == 'horn'){
+
+				$('#p2hornb'+kingSpot).html('<img class="played-card" src="./cards/horn.png">');
+				$('#p2hornb'+kingSpot).addClass('horn-active');
+				activateHorn(kingSpot, 'leader', king.img);
+
+			} else if(kingType == 'weather'){
+
+				if(kingSpot == 1){
+					activateWeather('frost', (kingSpot-1), 2, {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0})
+				} else if(kingSpot == 2){
+					activateWeather('fog', (kingSpot-1), 2, {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0})
+				} else if(kingSpot == 3){
+					activateWeather('rain', (kingSpot-1), 2, {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0})
+				} else if(kingSpot == 0){
+					clearWeather(2, {img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0});
+				};
+
 			};
-			$('#p2hornb'+currHorn).html('<img class="played-card" src="./cards/horn.png">');
-			$('#p2hornb'+currHorn).addClass('horn-active');			
+		
 			$('#p2leader').addClass('fade');
-			activateHorn(currHorn, 'leader', leaderType);
 		};
 
 		var nurse;
@@ -2092,18 +2123,22 @@
 		});		
 
 		$('#p2leader').on('click', function(){
-			$("#pass-select-div").remove();
+
+			$('#pass-select-div').remove();
 			passOpen = false;
 			$('.selected-div').remove();
-			playLeader();
+			playLeader(playerData[me].king);
+
 		});
 
 		$('#gwent-board').on('click', '#confirm-play-leader', function(){
-			if(playerData[me].deck == 'deck1' || playerData[me].deck == 'deck2'){
-				activateLeader('north');
-			} else if (playerData[me].deck == 'deck3' || playerData[me].deck == 'deck4'){
-				activateLeader('monster');
-			};			
+
+			for (var i = 0; i < kings.length; i++) {
+				if(kings[i].id == playerData[me].king){
+					activateLeader(kings[i]);
+				};
+			};
+
 		});
 
 		function displayGraveyardCards(){		
@@ -2193,7 +2228,8 @@
 
 				setTimeout(function(){
 
-					if(playerData[data.player].deck == 'deck3' || playerData[data.player].deck == 'deck4'){
+					//BAD DAYa1
+					if(playerData[data.player].faction == 'Monsters'){
 
 						$('#gwent-board').append('<div class="opp-display-div result-display-div"><div id="opp-display">'+data.name+' wins the round! <br><br> '+data.name+' has <span class="plus1">1</span> card stay on the field!</div></div>');
 
@@ -2698,9 +2734,17 @@
 
 			for (var i = 0; i < muster.length; i++) {
 
+				var hero = heroCheck(muster[i]);
+
+				if(hero){
+					var heroClass = "hero";
+				} else {
+					var heroClass = "";
+				};	
+
 				gameboard[0][muster[i].type-1].push(muster[i]);
 
-				$('#p1b'+muster[i].type).append('<img data-id="'+muster[i].spec+'" data-base="'+muster[i].baseAtk+'" data-atk="'+muster[i].atk+'" data-row="'+(muster[i].type-1)+'" data-spot="'+(gameboard[1][muster[i].type-1].length-1)+'" class="played-card my-card" src="'+muster[i].img+'">');
+				$('#p1b'+muster[i].type).append('<img data-id="'+muster[i].spec+'" data-base="'+muster[i].baseAtk+'" data-atk="'+muster[i].atk+'" data-row="'+(muster[i].type-1)+'" data-spot="'+(gameboard[1][muster[i].type-1].length-1)+'" class="played-card my-card '+heroClass+'" src="'+muster[i].img+'">');
 
 			};
 
@@ -2787,11 +2831,34 @@
 
 		function displayOppLeader(){
 			$('#p1leader').addClass('fade');
-			if(playerData[other].deck == 'deck1' || playerData[other].deck == 'deck2'){
-				displayOppHorn({ card: {row: 3} });	
-			} else if(playerData[other].deck == 'deck3' || playerData[other].deck == 'deck4'){
-				displayOppHorn({ card: {row: 1} });	
-			}		
+
+			for (var i = 0; i < kings.length; i++) {
+				if(kings[i].id == playerData[other].king){
+					var oppKing = kings[i];
+				};
+			};
+
+			var oppKingPowerSplit = oppKing.spec.split('-');
+			var oppKingType = oppKingPowerSplit[0];
+			var oppKingSpot = oppKingPowerSplit[1];
+
+			if(oppKingType == 'horn'){
+
+				displayOppHorn({ card: {row: oppKingSpot} });	
+
+			} else if(oppKingType == 'weather'){
+
+				if(oppKingSpot == 1){
+					displayOppWeather({card: {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0}});
+				} else if(oppKingSpot == 2){
+					displayOppWeather({card: {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0}});
+				} else if(oppKingSpot == 3){
+					displayOppWeather({card: {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0}});
+				} else if(oppKingSpot == 0){
+					displayOppWeather({card: {img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0}});
+				};
+
+			};					
 		};
 
 		function displayOppDecoy(data){
@@ -2882,21 +2949,31 @@
 			console.log(playerData);
 			console.log(playerData[me]);
 
-			if(playerData[me].deck == 'deck1' || playerData[me].deck == 'deck2'){
-				$('#p2leader').css('backgroundImage', 'url(./cards/leader.png)');
+			//change for kinga1
+			if(playerData[me].faction == 'Northern Realms'){
 				$('#p2deck').css('backgroundImage', 'url(./cards/NR-deck.png)');
-			} else if (playerData[me].deck == 'deck3' || playerData[me].deck == 'deck4'){
-				$('#p2leader').css('backgroundImage', 'url(./cards/monster-leader.jpg)');
+			} else if(playerData[me].faction == 'Monsters'){
 				$('#p2deck').css('backgroundImage', 'url(./cards/M-deck.jpg)');
+			} else if(playerData[me].faction == 'Grim'){
+				//..
 			};
 
-			if(playerData[other].deck == 'deck1' || playerData[other].deck == 'deck2'){
-				$('#p1leader').css('backgroundImage', 'url(./cards/leader.png)');
+			if(playerData[other].faction == 'Northern Realms'){
 				$('#p1deck').css('backgroundImage', 'url(./cards/NR-deck.png)');
-			} else if (playerData[other].deck == 'deck3' || playerData[me].deck == 'deck4'){
-				$('#p1leader').css('backgroundImage', 'url(./cards/monster-leader.jpg)');
+			} else if(playerData[other].faction == 'Monsters'){
 				$('#p1deck').css('backgroundImage', 'url(./cards/M-deck.jpg)');
-			};			
+			} else if(playerData[other].faction == 'Grim'){
+				//..
+			};
+
+			for (var i = 0; i < kings.length; i++) {
+				if(playerData[me].king == kings[i].id){
+					$('#p2leader').css('backgroundImage', 'url('+kings[i].img+')');
+				};
+				if(playerData[other].king == kings[i].id){
+					$('#p1leader').css('backgroundImage', 'url('+kings[i].img+')');
+				};				
+			};				
 
 			if(data.type == 'new-game'){
 				$('#pregame-select-div').remove();

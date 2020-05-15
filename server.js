@@ -61,10 +61,10 @@
 
 			if(io.sockets.adapter.rooms[data.room].length <= 1){
 				console.log('nobody in room');
-				playerData.push({'name': data.name, 'deck': data.deck, "id": 0, ready: false});
+				playerData.push({'name': data.name, 'deck': data.deck, "id": 0, ready: false, king: data.king, faction: data.faction});
 				io.to(data.room).emit('waiting', playerData[0].id);
 			} else {
-				playerData.push({'name': data.name, 'deck': data.deck, "id": 1, ready: false});
+				playerData.push({'name': data.name, 'deck': data.deck, "id": 1, ready: false, king: data.king, faction: data.faction});
 				console.log('room is active');
 				socket.emit('player-id', 1);
 				io.to(data.room).emit('setup');
