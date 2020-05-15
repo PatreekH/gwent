@@ -728,8 +728,8 @@
 			$('#deck-builder').remove();
 			$('#faction-div').remove();
 
-			$('body').append('<div id="login-div"></div>');
-			$('#login-div').html('Starting Game.');
+			$('#login-div').remove();
+			$('body').append('<div id="login-div">Starting Game.</div>');
 
 			setTimeout(function(){
 				location.replace('gwent.html')
