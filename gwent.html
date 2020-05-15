@@ -27,6 +27,7 @@
 		info: spy deocyed during weather, stays atk level 1 when replayed
 	
 	-KING GLITCH
+		info: home-page -- can hit select without selecting king, perhaps DEhighlight it off rip
 		info: have king weather cards PULL FROM DECK
 		info: create new functionality
 -->
@@ -733,130 +734,12 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>	
 
-		var deck1 = [
-			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
-			{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
-			{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
-			{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
-			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
-			{img: './cards/thaler.png', atk: 1, spec: 'spy', type: 0, hero: 0, baseAtk: 1, realType:3},
-			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
-			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-		];
 
 		// {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
 		// {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0}
 		// {img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0}
 		// {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0}
 		// {img: './cards/cow.png', atk: 0, spec: 'cow', type: 2, hero: 0, baseAtk: 0},
-
-		var deck2 = [
-			{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
-			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
-			{img: './cards/Elihart.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
-			{img: './cards/esterad.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5},
-			{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
-			{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
-			{img: './cards/thaler.png', atk: 1, spec: 'spy', type: 0, hero: 0, baseAtk: 1, realType:3},
-			{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
-			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-		];
-
-		var deck3 = [
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
-			{img: './cards/triss.png', atk: 7, spec: 'none', type: 1, hero: 1, baseAtk: 7},
-			{img: './cards/yennifer.png', atk: 7, spec: 'heal', type: 2, hero: 1, baseAtk: 7},
-			{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/geralt.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-			{img: './cards/elf.png', atk: 0, spec: 'spy', type: 0, hero: 1, baseAtk: 0, realType:1},
-			{img: './cards/crone_brewess.jpg', atk: 6, spec: 'muster', musterNum: 1, type: 1, hero: 0, baseAtk: 6},
-			{img: './cards/crone_weavess.png', atk: 6, spec: 'muster', musterNum: 1, type: 1, hero: 0, baseAtk: 6},
-			{img: './cards/crone_whispess.png', atk: 6, spec: 'muster', musterNum: 1, type: 1, hero: 0, baseAtk: 6},
-			{img: './cards/draug.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/imlerith.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
-			{img: './cards/leshen.png', atk: 10, spec: 'none', type: 2, hero: 1, baseAtk: 10},
-			{img: './cards/kayran.png', atk: 8, spec: 'none', type: 2, hero: 1, baseAtk: 8},
-			{img: './cards/fire_ele.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/earth_ele.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/ice_giant.png', atk: 5, spec: 'none', type: 3, hero: 0, baseAtk: 5},
-			{img: './cards/fiend.png', atk: 6, spec: 'none', type: 1, hero: 0, baseAtk: 6},
-			{img: './cards/arachas_behe.png', atk: 6, spec: 'muster', musterNum: 2, type: 3, hero: 0, baseAtk: 6},
-			{img: './cards/arachas_1.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/arachas_2.png', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/arachas_3.jpg', atk: 4, spec: 'muster', musterNum: 2, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/vamp_bruxa.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/vamp_ekim.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/vamp_fleder.png', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/vamp_gark.jpg', atk: 4, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 4},
-			{img: './cards/vamp_kata.png', atk: 5, spec: 'muster', musterNum: 3, type: 1, hero: 0, baseAtk: 5},	
-			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},	
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0},
-			{img: './cards/horn.png', atk: 0, spec: 'horn', type: 0, hero: 0, baseAtk: 0}
-		];
-
-		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
-		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
-		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
-		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
-		// {img: './cards/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
-		// {img: './cards/alpha_beowolf.png', atk: 6, spec: 'muster', musterNum: 4, type: 3, hero: 1, baseAtk: 6},		
-
-		var deck4 = [];
-
 		var kings = [
 			{id: 'm1', type: 'monster', spec: 'horn-1', img: './cards/monster-leader.jpg'},
 			{id: 'm2', type: 'monster', spec: 'heal', img: './cards/monster-leader2.jpg'},
@@ -1505,6 +1388,18 @@
 					};
 				};					
 
+			} else if(card.spec == 'team6'){
+
+				activateTeam('team6', 0, 6);
+
+				if(action != 'healed'){
+					if(player == 2){
+						endTurn(card, false, false, false, false, false, false, false, false, false);
+					} else {
+						turnOver();
+					};				
+				};	
+
 			} else if(card.spec == 'team5'){
 
 				activateTeam('team5', 1, 5);
@@ -1646,8 +1541,10 @@
 
 			if(frost){
 				activateTeam('team4', 0, 1);
+				activateTeam('team6', 0, 1);
 			} else {
 				activateTeam('team4', 0, 4);
+				activateTeam('team6', 0, 6);
 			};
 
 			if(fog){
