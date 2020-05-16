@@ -35,7 +35,7 @@
 				width: 75%;
 				background-color: #303030;
 				position: absolute;
-				top: 10%;
+				top: 8%;
 				left: 50%;
 				padding: 15px;
 				padding-top: 0px;
@@ -68,7 +68,7 @@
 				transform: translateX(-50%);				
 			}
 			#faction-div{
-				margin-top: 3%;
+				margin-top: 2.05%;
 				left: 12.5%;
 				position: relative;
 				width: 75%;
@@ -287,6 +287,42 @@
 				margin: 20px;				
 			}
 
+			#file-options{
+				position: absolute;
+				top: 89%;
+				width: 100%;
+				height: 56px;
+				text-align: center;
+			}
+
+			#save-deck{
+				cursor: pointer;
+				padding-top: 15px;
+				font-weight: 500;
+				float: left;
+				width: 125px;
+				height: 50px;
+				text-align: center;
+				color: black;
+				background-color: tan;
+				position: relative;
+				left: 36%;
+			}
+
+			#load-deck{
+				cursor: pointer;
+				padding-top: 15px;
+				font-weight: 500;
+				float: left;
+				width: 125px;
+				height: 50px;
+				text-align: center;
+				color: black;
+				background-color: tan;
+				position: relative;
+				left: 39%;			
+			}
+
 		</style>
 	</head>
 	<body>
@@ -353,7 +389,7 @@
 		function startDeckBuilder(){
 
 			$('#login-div').remove();
-			$('body').append('<div id="faction-div"></div><div id="deck-builder"><div id="deck-label-div"><p id="all-cards-label" class="deck-labels">All Cards</p><p id="my-cards-label" class="deck-labels">My Deck</p></div><div class="db-rows" id="all-cards"><div class="select-notice">Select Faction</div></div><div class="db-rows" id="deck-stats"><div id="leader-div"><div id="leader-label">Leader</div><div id="leader"></div></div><div id="total-all-div"><div id="total-all-label">Total Cards</div><div id="total-all">0</div></div><div id="total-units-div"><div id="total-units-label">Unit Cards</div><div id="total-units">0/22</div></div><div id="total-special-div"><div id="total-special-label">Special Cards</div><div id="total-special">0/10</div></div><button id="play-btn" class="btn-warning btn">Ready!</button></div><div class="db-rows" id="my-deck"><div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="custom-units">No Cards Selected</div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="custom-specials">No Cards Selected</div></div></div>');
+			$('body').append('<div id="faction-div"></div><div id="deck-builder"><div id="deck-label-div"><p id="all-cards-label" class="deck-labels">All Cards</p><p id="my-cards-label" class="deck-labels">My Deck</p></div><div class="db-rows" id="all-cards"><div class="select-notice">Select Faction</div></div><div class="db-rows" id="deck-stats"><div id="leader-div"><div id="leader-label">Leader</div><div id="leader"></div></div><div id="total-all-div"><div id="total-all-label">Total Cards</div><div id="total-all">0</div></div><div id="total-units-div"><div id="total-units-label">Unit Cards</div><div id="total-units">0/22</div></div><div id="total-special-div"><div id="total-special-label">Special Cards</div><div id="total-special">0/10</div></div><button id="play-btn" class="btn-warning btn">Ready!</button></div><div class="db-rows" id="my-deck"><div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="custom-units">No Cards Selected</div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="custom-specials">No Cards Selected</div></div></div><div id="file-options"><div id="save-deck">Save Deck</div><div id="load-deck">Load Deck</div></div>');
 			for (var i = 0; i < factions.length; i++) {
 				$('#faction-div').append('<div class="factions" data-id="'+factions[i]+'">'+factions[i]+'</div>');
 			};
@@ -647,11 +683,12 @@
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
-						{img: './cards/grim/goliath.png', atk: 10, spec: 'heal', type: 3, hero: 0, baseAtk: 10},
+						{img: './cards/grim/goliath.png', atk: 8, spec: 'heal', type: 3, hero: 0, baseAtk: 8},
 
 						{img: './cards/grim/ursa_major.png', atk: 8, spec: 'muster', musterNum: 5, type: 3, hero: 1, baseAtk: 8},
 
 						{img: './cards/grim/wyvern.png', atk: 10, spec: 'heal', type: 2, hero: 1, baseAtk: 10},
+						{img: './cards/grim/Nevermore.png', atk: 8, spec: 'none', type: 3, hero: 0, baseAtk: 8},
 
 
 						{img: './cards/grim/leviathan.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
@@ -659,7 +696,7 @@
 						{img: './cards/grim/sea_feilong.png', atk: 12, spec: 'none', type: 3, hero: 1, baseAtk: 12},
 						{img: './cards/grim/beringle.png', atk: 8, spec: 'none', type: 1, hero: 1, baseAtk: 8},
 						{img: './cards/grim/death_stalker.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 15},
-						{img: './cards/grim/megoliath.png', atk: 10, spec: 'none', type: 3, hero: 1, baseAtk: 10},
+						{img: './cards/grim/megoliath.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
 					];
 			grimCards = grimCards.concat(specialCards);			
 		};
