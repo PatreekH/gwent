@@ -3,9 +3,6 @@
 		info: name doesnt appear on a players screen
 		info: decks dont reset after game?
 
- 	-Decoy Error
-		info: decoy team member power card doesnt remove score? PLAY TEAM - DECOY TEAM - REMAINING MEMBER DOESNT LOSE SCORE - SOLUTION: RERUN TEAM FUNCTION AFTER DECOYS
-
 	-Close game Error
 		info: game data not clearing when users close the game. Next game started is wonky
 
@@ -25,9 +22,6 @@
 		info: what happens to reward if only heros left?
 		info: if monster win, reset board doesnt work
 		info: monster snatching card off other players board
-
-	-Spy Glitch
-		info: spy deocyed during weather, stays atk level 1 when replayed, do all units?(fixed? check scorch/heal)
 	
 	-KING GLITCH
 		info: home-page -- can hit select without selecting king, perhaps DEhighlight it off rip
@@ -726,8 +720,8 @@
 					<div id="block"></div>
 					<div id="king-block"></div>
 					<div id="pass-block"></div>
-					<button id="card-create">Create card</button>
-					<input id="cheater">
+<!-- 					<button id="card-create">Create card</button>
+					<input id="cheater"> -->
 				</div>
 				<div class="col-lg-12">
 					<div class="row">
@@ -809,10 +803,11 @@
 					for (var i = 0; i < myDeck.length; i++) {
 						deckHolder.push(myDeck[i]);
 					};
-					//playerData[me].king
-				} else {
-					$('#p1name').html(data[i].name);
+					$('#p1name').html(data[other].name);
 				}
+				// } else {
+				// 	$('#p1name').html(data[i].name);
+				// }
 			}
 
 			drawHand();
@@ -902,10 +897,6 @@
 
 			refreshHand(playerHand)
 		});
-
-		function addCard(card){
-
-		}
 
 		function refreshHand(currentHand){
 			$('#player-hand').empty();
