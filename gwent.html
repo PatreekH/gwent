@@ -1652,6 +1652,8 @@
 				$('#pass-block').css('display', 'none');
 				selectingDecoy = false;
 
+				reactivateTeams();
+
 				calculateScore();
 
 				endTurn({row: cardRow, spot: cardSpot, img: './cards/decoy.png'}, false, false, false, false, true, false, false, false, false);
@@ -2667,6 +2669,7 @@
 
 				gameboard[0][data.card.row].splice((data.card.spot), 1, {img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0});
 
+				$(decoyedCard).removeClass('spec-active');
 				$(decoyedCard).attr("src","./cards/decoy.png");
 				$(decoyedCard).attr("data-id","decoy");
 				$(decoyedCard).attr("data-atk", 0);
