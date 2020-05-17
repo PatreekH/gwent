@@ -30,6 +30,7 @@
 				transform: translateX(-50%);						
 			}
 			#deck-builder{
+				z-index: 2;
 				text-align: center;
 				height: 80%;
 				width: 75%;
@@ -39,7 +40,7 @@
 				left: 50%;
 				padding: 15px;
 				padding-top: 0px;
-				transform: translateX(-50%);				
+				transform: translateX(-45%);				
 			}
 			.db-rows{
 				padding-bottom: 15px;
@@ -48,11 +49,11 @@
 				border: 1px solid black;
 			}
 			#all-cards{
-				/*overflow: scroll;*/
+				overflow: scroll;
 				width: 45%;
 			}
 			#my-deck{
-				/*overflow: scroll;*/
+				overflow: scroll;
 				width: 45%;
 			}
 			#deck-stats{
@@ -69,10 +70,11 @@
 			}
 			#faction-div{
 				margin-top: 2.05%;
-				left: 12.5%;
+				left: 50%;
 				position: relative;
 				width: 75%;
 				height: 50px;
+				transform: translateX(-45%);
 			}
 			.factions{
 				cursor: pointer;
@@ -288,9 +290,9 @@
 			}
 
 			#file-options{
-				position: absolute;
-				top: 89%;
-				width: 100%;
+				z-index: 1;
+				position: relative;
+				top: 28%;
 				height: 56px;
 				text-align: center;
 			}
@@ -299,14 +301,12 @@
 				cursor: pointer;
 				padding-top: 15px;
 				font-weight: 500;
-				float: left;
 				width: 125px;
 				height: 50px;
 				text-align: center;
 				color: black;
 				background-color: tan;
 				position: relative;
-				left: 36%;
 			}
 
 			#load-deck{
@@ -320,7 +320,77 @@
 				color: black;
 				background-color: tan;
 				position: relative;
-				left: 39%;			
+				top: 25px;		
+			}
+
+			#save-deck-div{
+				top: 250px;
+				z-index: +21;
+				background-color: tan;
+				position: relative;
+				width: 400px;
+				text-align: center;
+				font-size: 20px;
+				padding: 21px;
+				height: 150px;
+				font-weight: 700;
+				transform: translateX(-50%);
+				left: 50%;
+			}
+			.save-div-btns{
+				margin: 10px;
+				cursor: pointer;
+			}
+			#saving-deck-text{
+				font-size: 20px;
+				padding-top: 40px; 
+			}
+			#loading-deck-text{
+				font-size: 20px;
+				padding: 15px; 
+			}			
+
+			#load-deck-div{
+				z-index: +21;
+				background-color: tan;
+				position: relative;
+				width: 765px;
+				text-align: center;
+				padding: 21px;
+				height: 100%;
+				top: 260px;
+				transform: translateX(-50%);
+				left: 50%;				
+			}
+			#loaded-decks{
+				padding: 12px;
+				background-color: white;
+			}
+			.load-btns{
+				cursor: pointer;
+				margin-left: 10px;
+				margin-right: 10px;
+				margin-top: 10px;
+			}
+			th{
+				cursor: pointer;
+				text-align: center;
+				padding-right: 40px;
+				padding-left: 40px;				
+			}
+			td{
+				cursor: pointer;
+			}
+			.selectable-deck:hover{
+				background-color: lightgrey;
+			}
+			.selected-deck{
+				background-color: lightsalmon !important;
+			}
+			#full-container{
+				position: absolute;
+				height: 100%;
+				width: 100%;
 			}
 
 		</style>
@@ -389,7 +459,7 @@
 		function startDeckBuilder(){
 
 			$('#login-div').remove();
-			$('body').append('<div id="faction-div"></div><div id="deck-builder"><div id="deck-label-div"><p id="all-cards-label" class="deck-labels">All Cards</p><p id="my-cards-label" class="deck-labels">My Deck</p></div><div class="db-rows" id="all-cards"><div class="select-notice">Select Faction</div></div><div class="db-rows" id="deck-stats"><div id="leader-div"><div id="leader-label">Leader</div><div id="leader"></div></div><div id="total-all-div"><div id="total-all-label">Total Cards</div><div id="total-all">0</div></div><div id="total-units-div"><div id="total-units-label">Unit Cards</div><div id="total-units">0/22</div></div><div id="total-special-div"><div id="total-special-label">Special Cards</div><div id="total-special">0/10</div></div><button id="play-btn" class="btn-warning btn">Ready!</button></div><div class="db-rows" id="my-deck"><div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="custom-units">No Cards Selected</div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="custom-specials">No Cards Selected</div></div></div><div id="file-options"><div id="save-deck">Save Deck</div><div id="load-deck">Load Deck</div></div>');
+			$('body').append('<div id="full-container"><div id="faction-div"></div><div id="deck-builder"><div id="deck-label-div"><p id="all-cards-label" class="deck-labels">All Cards</p><p id="my-cards-label" class="deck-labels">My Deck</p></div><div class="db-rows" id="all-cards"><div class="select-notice">Select Faction</div></div><div class="db-rows" id="deck-stats"><div id="leader-div"><div id="leader-label">Leader</div><div id="leader"></div></div><div id="total-all-div"><div id="total-all-label">Total Cards</div><div id="total-all">0</div></div><div id="total-units-div"><div id="total-units-label">Unit Cards</div><div id="total-units">0/22</div></div><div id="total-special-div"><div id="total-special-label">Special Cards</div><div id="total-special">0/10</div></div><button id="play-btn" class="btn-warning btn">Ready!</button></div><div class="db-rows" id="my-deck"><div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="custom-units">No Cards Selected</div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="custom-specials">No Cards Selected</div></div></div><div id="file-options"><div id="save-deck">Save Deck</div><div id="load-deck">Load Deck</div></div></div>');
 			for (var i = 0; i < factions.length; i++) {
 				$('#faction-div').append('<div class="factions" data-id="'+factions[i]+'">'+factions[i]+'</div>');
 			};
@@ -438,8 +508,8 @@
 			$('#all-cards').empty();
 			$('#my-deck').empty();
 
-			$('#all-cards').css('overflow', 'scroll');
-			$('#my-deck').css('overflow', 'scroll');
+			// $('#all-cards').css('overflow', 'scroll');
+			// $('#my-deck').css('overflow', 'scroll');
 
 			$('#all-cards').html('<div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="curr-units"></div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="curr-specials"></div>');
 			$('#my-deck').html('<div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="custom-units">No Cards Selected</div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="custom-specials">No Cards Selected</div>');
@@ -544,7 +614,7 @@
 			$('#cover').remove();
 			$('#select-king-div').remove();
 			customKing = selectedKing.id;
-			$('#leader').html('<img id="selected-leader" src="'+selectedKing.img+'">')
+			$('#leader').html('<img id="selected-leader" src="'+selectedKing.img+'">');
 
 		});
 
@@ -553,7 +623,7 @@
 			$('#cover').remove();
 			$('#select-king-div').remove();
 
-		});					
+		});			
 
 		function checkValidDeck(){
 			if(totalUnits >= 22 && totalSpecial <= 10){
@@ -639,10 +709,41 @@
 						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
 						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
 						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
+						{img: './cards/bluestripcommando.png', atk: 4, spec: 'team4', type: 1, hero: 0, baseAtk: 4},
 						{img: './cards/ballista-1.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
 						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
+						{img: './cards/catapult.png', atk: 8, spec: 'team8', type: 3, hero: 0, baseAtk: 8},
 						{img: './cards/ciri.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
+						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
 						{img: './cards/dragonhunter.png', atk: 5, spec: 'team5', type: 2, hero: 0, baseAtk: 5},
@@ -654,7 +755,19 @@
 						{img: './cards/natalis.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
 						{img: './cards/roche.png', atk: 10, spec: 'none', type: 1, hero: 1, baseAtk: 10},
 						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
+						{img: './cards/siegetower.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
 						{img: './cards/sigis.png', atk: 4, spec: 'spy', type: 0, hero: 0, baseAtk: 4, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
+						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
 						{img: './cards/stennis.png', atk: 5, spec: 'spy', type: 0, hero: 0, baseAtk: 5, realType:1},
 						{img: './cards/thaler.png', atk: 1, spec: 'spy', type: 0, hero: 0, baseAtk: 1, realType:3},
 						{img: './cards/treb.png', atk: 6, spec: 'none', type: 3, hero: 0, baseAtk: 6},
@@ -668,29 +781,20 @@
 						{img: './cards/grim/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
 						{img: './cards/grim/beowolf.png', atk: 4, spec: 'muster', musterNum: 4, type: 1, hero: 0, baseAtk: 4},
 						{img: './cards/grim/alpha_beowolf.png', atk: 6, spec: 'muster', musterNum: 4, type: 3, hero: 1, baseAtk: 6},
-
 						{img: './cards/grim/seer.png', atk: 2, spec: 'spy', type: 0, hero: 0, baseAtk: 2, realType:2},
 						{img: './cards/grim/seer.png', atk: 2, spec: 'spy', type: 0, hero: 0, baseAtk: 2, realType:2},
-
 						{img: './cards/grim/ursa_minor.png', atk: 6, spec: 'muster', musterNum: 5, type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/ursa_minor.png', atk: 6, spec: 'muster', musterNum: 5, type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/ursa_minor.png', atk: 6, spec: 'muster', musterNum: 5, type: 1, hero: 0, baseAtk: 6},
-
 						{img: './cards/grim/king_taijitu.png', atk: 8, spec: 'team8', type: 2, hero: 0, baseAtk: 8},
 						{img: './cards/grim/king_taijitu.png', atk: 8, spec: 'team8', type: 2, hero: 0, baseAtk: 8},
-
-						
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/boarbatusk.png', atk: 6, spec: 'team6', type: 1, hero: 0, baseAtk: 6},
 						{img: './cards/grim/goliath.png', atk: 8, spec: 'heal', type: 3, hero: 0, baseAtk: 8},
-
 						{img: './cards/grim/ursa_major.png', atk: 8, spec: 'muster', musterNum: 5, type: 3, hero: 1, baseAtk: 8},
-
 						{img: './cards/grim/wyvern.png', atk: 10, spec: 'heal', type: 2, hero: 1, baseAtk: 10},
 						{img: './cards/grim/Nevermore.png', atk: 8, spec: 'none', type: 3, hero: 0, baseAtk: 8},
-
-
 						{img: './cards/grim/leviathan.png', atk: 15, spec: 'none', type: 1, hero: 1, baseAtk: 15},
 						{img: './cards/grim/nuckelavee.png', atk: 15, spec: 'none', type: 2, hero: 1, baseAtk: 15},
 						{img: './cards/grim/sea_feilong.png', atk: 12, spec: 'none', type: 3, hero: 1, baseAtk: 12},
@@ -708,14 +812,48 @@
 			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
 			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
+			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
 			{img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0},
@@ -740,12 +878,13 @@
 				alert('Not valid deck');
 			};
 
-		});		
+		});
 
 		socket.on('waiting', function(id){
 
 			$('#deck-builder').remove();
 			$('#faction-div').remove();
+			$('#file-options').remove();
 
 			$('body').append('<div id="login-div"></div>');
 
@@ -764,6 +903,7 @@
 		socket.on('setup', function(){
 			$('#deck-builder').remove();
 			$('#faction-div').remove();
+			$('#file-options').remove();
 
 			$('#login-div').remove();
 			$('body').append('<div id="login-div">Starting Game.</div>');
@@ -774,6 +914,185 @@
 
 		});
 
+		$('body').on('click', '#save-deck', function(){
+
+			if(selectedKing == 'none'){
+				alert('Not valid deck: select king');
+			} else if(validDeck){
+				$('body').append('<div id="cover"></div>');
+				$('body').append('<div id="save-deck-div">Enter name for Deck:<input id="deck-name-input"><button id="save-deck-btn" class="btn save-div-btns btn-default">Save Deck</button><button id="cancel-save" class="save-div-btns btn btn-default">Cancel</button></div>');
+			} else {
+				alert('Not valid deck');
+			};
+
+		});
+
+		$('body').on('click', '#load-deck', function(){
+
+			socket.emit('load-deck', {});
+
+		});
+
+		var allLoadedDecks = [];
+
+		socket.on('loaded-decks', function(data){
+
+			allLoadedDecks = data;
+
+			$('body').append('<div id="cover"></div>');
+			$('body').append('<div id="load-deck-div"><div id="loaded-decks"></div><button id="load" class="btn load-btns btn-default">Load Deck</button><button id="cancel-load" class="btn load-btns btn-default">Cancel</button></div>');
+
+			var loadedDeckString = '<table><thead><tr><th>#</th><th>Deck Name:</th><th>Faction:</th><th>Made By:</th><th>Date Created:</th></tr></thead><tbody>';
+
+			for (var i = 0; i < data.length; i++) {
+				loadedDeckString+='<tr class="selectable-deck" data-id="'+data[i].id+'"><td>'+(i+1)+'</td><td>'+data[i].deckName+'</td><td>'+data[i].file.faction+'</td><td>'+data[i].userName+'</td><td>'+data[i].timeStamp+'</td></tr>';
+			};
+
+			loadedDeckString += '</tbody></table>';
+
+			if(data == []){
+				$('#loaded-decks').html('No Decks Saved');
+			} else {
+				$('#loaded-decks').html(loadedDeckString);
+			};
+
+		});
+
+		var loadedSelected;
+
+		$('body').on('click', '.selectable-deck', function(){
+
+			$('.selected-deck').removeClass('selected-deck');
+			$(this).addClass('selected-deck');
+			loadedSelected = $(this).attr("data-id");
+
+		});
+
+		$('body').on('click', '#load', function(){
+
+			$('#load-deck-div').html('<div id="loading-deck-text">Loading Deck...</div>');
+
+			setTimeout(function(){
+				for (var i = 0; i < allLoadedDecks.length; i++) {
+					if(allLoadedDecks[i].id == loadedSelected){
+						loadDeck(allLoadedDecks[i].file);
+					};
+				};
+			}, 1000);
+
+		});
+
+		function loadDeck(file){
+
+			customDeck = [];
+			currDeck = [];
+			currFaction = file.faction;
+
+    		$('#cover').remove();
+    		$('#load-deck-div').remove();
+
+			$('.factions').each(function(){
+				var thisFaction = $(this).attr("data-id");
+				if(thisFaction == file.faction){
+					$('.factions').removeClass('selected');
+					$(this).addClass('selected');					
+				};
+			});
+
+			resetDecks();
+
+			validDeck = false;
+
+			totalCards = 0;
+			totalSpecial = 0;
+			totalUnits = 0;			
+
+			for (var i = 0; i < file.deck.length; i++) {
+				if(file.deck[i].type == 0 && file.deck[i].spec != 'spy'){
+					if(totalSpecial < 10){
+						totalCards++;
+						totalSpecial++;
+						customDeck.push(file.deck[i]);					
+					} else {
+						alert('Maximum 10 Special Cards');
+					};
+				} else {
+					totalCards++;
+					totalUnits++;
+					customDeck.push(file.deck[i]);				
+				};
+
+				$('#total-all').html(totalCards);
+				$('#total-special').html(totalSpecial+'/10');
+				$('#total-units').html(totalUnits+'/22');
+			};
+
+			for (var i = 0; i < kings[file.faction].length; i++) {
+				if(kings[file.faction][i].id == file.king){
+					customKing = kings[file.faction][i].id;
+					selectedKing = kings[file.faction][i];
+					$('#leader').html('<img id="selected-leader" src="'+kings[file.faction][i].img+'">');
+				};
+			};
+
+			if(file.faction == 'Northern Realms'){
+				var oppDeck = nRcards;
+			} else if(file.faction == 'Monsters'){
+				var oppDeck = monsterCards;
+			} else if(file.faction == 'Grim'){
+				var oppDeck = grimCards;
+			};
+
+			for (var i = 0; i < file.deck.length; i++) {
+				for (var ii = 0; ii < oppDeck.length; ii++) {
+					if(file.deck[i].img == oppDeck[ii].img){
+						oppDeck.splice(ii, 1);
+						ii = oppDeck.length+1;
+					};
+				};
+			};
+
+			currDeck = oppDeck;
+
+			$('#all-cards').html('<div id="unit-label-div"><div id="unit-label">Units</div><div id="unit-line"></div></div><div id="curr-units"></div><div id="special-label-div"><div id="special-label">Special</div><div id="special-line"></div></div><div id="curr-specials"></div>');		
+
+			updateDecks();
+			checkValidDeck();
+
+		};
+
+		$('body').on('click', '#save-deck-btn', function(){
+
+			var deckName = $('#deck-name-input').val();
+	    	var deckId = Math.floor(100000000 + Math.random() * 900000000);
+			var currentdate = new Date(); 
+			var timeStamp = (currentdate.getMonth()+1) + "/"
+        	+ currentdate.getDate() + "/" 
+        	+ currentdate.getFullYear() + " @ "  
+        	+ currentdate.getHours() + ":"  
+        	+ currentdate.getMinutes() + ":" 
+        	+ currentdate.getSeconds();
+        	socket.emit('save-deck', {id: deckId, userName: username, deckName: deckName, timeStamp: timeStamp, file: {king: customKing, deck: customDeck, faction: currFaction}});
+
+        	$('#save-deck-div').html('<div id="saving-deck-text">Saving Deck...</div>');
+
+        	setTimeout(function(){
+        		alert('Deck Saved!');
+        		$('#cover').remove();
+        		$('#save-deck-div').remove();
+        	}, 1500);
+
+		});
+
+		$('body').on('click', '#cancel-save', function(){
+    		$('#cover').remove();
+    		$('#save-deck-div').remove();
+		});
+
+		$('body').on('click', '#cancel-load', function(){
+    		$('#cover').remove();
+    		$('#load-deck-div').remove();
+		});			
 
 	</script>
 	</body>

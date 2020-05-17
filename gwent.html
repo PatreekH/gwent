@@ -1,14 +1,17 @@
 <!-- ERRORS:
+	-Start Error
+		info: name doesnt appear on a players screen
+		info: decks dont reset after game?
 
  	-Decoy Error
-		info: decoy team member power card doesnt remove score?	
+		info: decoy team member power card doesnt remove score? PLAY TEAM - DECOY TEAM - REMAINING MEMBER DOESNT LOSE SCORE - SOLUTION: RERUN TEAM FUNCTION AFTER DECOYS
 
 	-Close game Error
 		info: game data not clearing when users close the game. Next game started is wonky
 
 	-Waiting for player error
 		 info: happens on rematch when you select two cards instead of readying?
-		 still happening?
+		 still happening? is it?... (fixed?)
 
 	-Cow error
 		numbers dont delete after scorch
@@ -24,12 +27,16 @@
 		info: monster snatching card off other players board
 
 	-Spy Glitch
-		info: spy deocyed during weather, stays atk level 1 when replayed
+		info: spy deocyed during weather, stays atk level 1 when replayed, do all units?(fixed? check scorch/heal)
 	
 	-KING GLITCH
 		info: home-page -- can hit select without selecting king, perhaps DEhighlight it off rip
 		info: have king weather cards PULL FROM DECK
 		info: create new functionality
+
+	-Weather error
+		info: decoys, teams and weathers mess up still(fixed? check scorch/heal)
+		info: add cover to div when activated and use z index to markup still active cards
 -->
 
 <html>
@@ -719,6 +726,8 @@
 					<div id="block"></div>
 					<div id="king-block"></div>
 					<div id="pass-block"></div>
+					<button id="card-create">Create card</button>
+					<input id="cheater">
 				</div>
 				<div class="col-lg-12">
 					<div class="row">
@@ -789,6 +798,8 @@
 			} else if(me == 1){
 				other = 0;
 			};
+
+			console.log(playerData);
 
 			for (var i = 0; i < data.length; i++) {
 				if(data[i].id == me){
@@ -871,6 +882,30 @@
 			shuffledDeck = shuffle(shuffledDeck);
 			playerIsReady();
 		});
+
+		$('#gwent-board').on('click', '#card-create', function(){
+			if($('#cheater').val() == 'd'){
+				playerHand.push({img: './cards/decoy.png', atk: 0, spec: 'decoy', type: 0, hero: 1, baseAtk: 0});
+			} else if($('#cheater').val() == 'r'){
+				playerHand.push({img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0});
+			} else if($('#cheater').val() == 'f'){
+				playerHand.push({img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0});
+			} else if($('#cheater').val() == 's'){
+				playerHand.push({img: './cards/scorch.png', atk: 0, spec: 'scorch', type: 0, hero: 0, baseAtk: 0});
+			} else if($('#cheater').val() == 'h'){
+				playerHand.push({img: './cards/medic5.jfif', atk: 5, spec: 'heal', type: 3, hero: 0, baseAtk: 5});
+			} else if($('#cheater').val() == 'fog'){
+				playerHand.push({img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0});
+			} else if($('#cheater').val() == 'sun'){
+				playerHand.push({img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0});
+			};
+
+			refreshHand(playerHand)
+		});
+
+		function addCard(card){
+
+		}
 
 		function refreshHand(currentHand){
 			$('#player-hand').empty();
@@ -1590,9 +1625,13 @@
 				var cardSpot = $(this).attr("data-spot");
 				var cardRow = $(this).attr("data-row");
 
+				$(this).removeClass('spec-active');
+
 				var decoyed = gameboard[1][cardRow][cardSpot];
 
-				playerHand.push(gameboard[1][cardRow][cardSpot]);
+				decoyed.atk = decoyed.baseAtk;
+
+				playerHand.push(decoyed);
 
 				refreshHand(playerHand);
 
@@ -1691,16 +1730,7 @@
 				    	currentGameScore[i].graveyard.splice(ii, 1);
 				    }; 
 				};
-			};
-
-			//	WHY DO WE NEED THIS?
-			// for (var i = 0; i < gameboard.length; i++) {
-			// 	for (var ii = 0; ii < gameboard[i].length; ii++) {
-			// 		for (var iii = 0; iii < gameboard[i][ii].length; iii++) {
-			// 			gameboard[i][ii][iii].atk = gameboard[i][ii][iii].baseAtk;
-			// 		};
-			// 	};
-			// };			
+			};		
 
 			for (var i = 0; i < currentGameScore.length; i++) {
 				for (var ii = 0; ii < currentGameScore[i].graveyard.length; ii++) {

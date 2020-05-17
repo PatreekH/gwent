@@ -8,14 +8,30 @@
 
 // Database Setup
 // =============================================================
-	// var mysql = require('mysql');
 
-	// var con = mysql.createConnection({
-	//   host: "localhost",
-	//   user: "root",
-	//   password: ,
-	//   database: "address_data"
-	// });
+
+	// Connection URL
+	var MongoClient = require('mongodb').MongoClient;
+	var url = 'mongodb+srv://dbuser:newave12@decks-46wa9.mongodb.net/test?retryWrites=true&w=majority';
+
+	// Database Name
+	var rdb;
+
+	MongoClient.connect(url, function(err, db) {
+		if (err) throw err;
+		console.log("Database created!");
+		//console.log(db.collection);
+		rdb = db.db("gwent");
+	});
+
+// rdb.collection('decks', function (err, collection) {
+// 		    if (err){
+// 		    	console.log(err);
+// 		    } else {
+// 		    	collection.insertOne({ id: 1, firstName: 'Steve', lastName: 'Jobs' });
+// 		    };
+// 		});
+
 
 // =============================================================
 
@@ -74,6 +90,7 @@
 
 		socket.on('ready', function(data) {
 			console.log(data.id);
+			console.log(playerData);
 			playerData[data.id].ready = true;
 
 			if(playerData[0].ready == true && playerData[1].ready == true){
@@ -159,6 +176,23 @@
 			};
 			io.emit('starting-rematch', {});
 		});
+
+		socket.on('save-deck', function(data){
+			rdb.collection('decks', function (err, collection) {
+			    if (err){
+			    	console.log(err);
+			    } else {
+					collection.insertOne(data);
+			    	console.log('Deck Saved!');	
+			    };
+			});	
+		});
+		socket.on('load-deck', function(data){
+			rdb.collection('decks').find({}).toArray(function(err, result) {
+				var allDecks = result;
+		    	socket.emit('loaded-decks', allDecks);				
+			});	
+		});		
 
 
 		//Disconnection check
