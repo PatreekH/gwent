@@ -12,7 +12,12 @@
 
 	// Connection URL
 	var MongoClient = require('mongodb').MongoClient;
-	var url = 'mongodb+srv://dbuser:newave12@decks-46wa9.mongodb.net/test?retryWrites=true&w=majority';
+
+	//mLab
+	var url = 'mongodb://patrickh:newave12@ds023560.mlab.com:23560/heroku_mr7v19f4';
+
+	//ATLAS
+	//var url = 'mongodb+srv://dbuser:newave12@decks-46wa9.mongodb.net/test?retryWrites=true&w=majority';
 
 	// Database Name
 	var rdb;
@@ -21,7 +26,7 @@
 		if (err) throw err;
 		console.log("Database created!");
 		//console.log(db.collection);
-		rdb = db.db("gwent");
+		rdb = db.db("heroku_mr7v19f4");
 	});
 
 // rdb.collection('decks', function (err, collection) {
