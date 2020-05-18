@@ -1,14 +1,11 @@
 <!-- ERRORS:
 	-Start Error
-		info: name doesnt appear on a players screen
-		info: decks dont reset after game?
-
-	-Close game Error
-		info: game data not clearing when users close the game. Next game started is wonky
+		info: name doesnt appear on a players screen?(fixed?)------------------------
+		info: decks dont reset after game?(fixed?)------------------------
 
 	-Waiting for player error
 		 info: happens on rematch when you select two cards instead of readying?
-		 still happening? is it?... (fixed?)
+		 still happening? is it?... (fixed?)-----------------------------------------------
 
 	-Cow error
 		numbers dont delete after scorch
@@ -29,8 +26,12 @@
 		info: create new functionality
 
 	-Weather error
-		info: decoys, teams and weathers mess up still(fixed? check scorch/heal)
+		info: decoys, teams and weathers mess up still(fixed? check scorch/heal)-----------------
 		info: add cover to div when activated and use z index to markup still active cards
+		info: CARDS EFFECTED BY WEATHER DONT RESET ON NEW GAME
+
+	-scortch glitch
+		info: scortched all 4s and 4 on PLAYED SCORCH SIDE didnt die SEE ABOVE
 -->
 
 <html>
@@ -781,7 +782,6 @@
 		var me;
 		var other;
 		var myDeck = [];
-		var deckHolder = [];
 
 		function setupBoard(data){
 
@@ -799,19 +799,11 @@
 				if(data[i].id == me){
 					$('#p2name').html(data[i].name);
 					myDeck = data[i].deck;
-					deckHolder = [];
-					for (var i = 0; i < myDeck.length; i++) {
-						deckHolder.push(myDeck[i]);
-					};
 					$('#p1name').html(data[other].name);
-				}
-				// } else {
-				// 	$('#p1name').html(data[i].name);
-				// }
-			}
+				};
+			};
 
 			drawHand();
-
 			pregameSelection();
 			//runs once players are ready.
 			//displays players card number and name
@@ -2438,13 +2430,29 @@
 			resetDecks();
 			rematching = true;	
 			refreshBoard();
-			setupBoard(playerData);
 		};
 
 		function resetDecks(){
 			console.log(myDeck);
 			console.log(deckHolder);
-			playerData[me].deck = deckHolder;
+			grabPlayerData();
+		};
+
+		function grabPlayerData(){
+			$.ajax({
+
+		        method: 'GET',
+		        contentType: 'application/json',
+	        	dataType: 'json',
+
+		        url: '/get-player-data',
+
+		        success: function(response){
+					playerData = response;
+					setupBoard(response);
+		        }
+
+			});
 		};
 
 		var oppPackage;
