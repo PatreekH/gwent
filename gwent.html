@@ -22,16 +22,16 @@
 	
 	-KING GLITCH
 		info: home-page -- can hit select without selecting king, perhaps DEhighlight it off rip
-		info: have king weather cards PULL FROM DECK
+		info: have king weather cards PULL FROM DECK (NEEDS TESTING!!!)
 		info: create new functionality
 
 	-Weather error
 		info: decoys, teams and weathers mess up still(fixed? check scorch/heal)-----------------
 		info: add cover to div when activated and use z index to markup still active cards
-		info: CARDS EFFECTED BY WEATHER DONT RESET ON NEW GAME
+		info: CARDS EFFECTED BY WEATHER DONT RESET ON NEW GAME(fixed?)....................
 
 	-scortch glitch
-		info: scortched all 4s and 4 on PLAYED SCORCH SIDE didnt die SEE ABOVE
+		info: healing a card that just scorched doesnt send to player
 -->
 
 <html>
@@ -349,7 +349,7 @@
 
 			.selected{
 				height: 300px;
-				width: 150px;		
+				width: 150px;	
 			}
 			.selected-div{
 				z-index: +5;
@@ -670,6 +670,13 @@
 				float: left;
 			}
 
+			#weather-select-div{
+				width: 500px;
+				background-color: tan;
+				font-size: 24px;
+				text-align: center;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -721,8 +728,8 @@
 					<div id="block"></div>
 					<div id="king-block"></div>
 					<div id="pass-block"></div>
-					<button id="card-create">Create card</button>
-					<input id="cheater">
+<!-- 					<button id="card-create">Create card</button>
+					<input id="cheater"> -->
 				</div>
 				<div class="col-lg-12">
 					<div class="row">
@@ -902,7 +909,7 @@
 				$('.card').css('marginRight', '-10px');
 			} else {
 				$('.card').css('marginRight', '5px');
-			}			
+			};		
 
 		};
 
@@ -1909,7 +1916,6 @@
 			clearSelected();
 
 			var kingPowerSplit = king.spec.split('-');
-			console.log(kingPowerSplit);
 			var kingType = kingPowerSplit[0];
 			var kingSpot = kingPowerSplit[1];
 
@@ -1922,18 +1928,51 @@
 			} else if(kingType == 'weather'){
 
 				if(kingSpot == 1){
-					activateWeather('frost', (kingSpot-1), 2, {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0})
+					activateWeather('frost', (kingSpot-1), 2, {img: './cards/frost.png', atk: 0, spec: 'frost', type: 0, hero: 0, baseAtk: 0});
 				} else if(kingSpot == 2){
-					activateWeather('fog', (kingSpot-1), 2, {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0})
+					activateWeather('fog', (kingSpot-1), 2, {img: './cards/fog.jpg', atk: 0, spec: 'fog', type: 0, hero: 0, baseAtk: 0});					
 				} else if(kingSpot == 3){
-					activateWeather('rain', (kingSpot-1), 2, {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0})
+					activateWeather('rain', (kingSpot-1), 2, {img: './cards/rain.png', atk: 0, spec: 'rain', type: 0, hero: 0, baseAtk: 0});					
 				} else if(kingSpot == 0){
 					clearWeather(2, {img: './cards/clearweather.png', atk: 0, spec: 'clear', type: 0, hero: 0, baseAtk: 0});
+				} else if(kingSpot == 'any'){
+					var searchRain = searchDeckForCard(playerData[me].deck, 'rain');
+					var searchFog = searchDeckForCard(playerData[me].deck, 'fog');
+					var searchFrost = searchDeckForCard(playerData[me].deck, 'frost');
+					var searchClear = searchDeckForCard(playerData[me].deck, 'clear');
+					var weatherDiv = '<div id="weather-select-div"><div id="weather-select-title">Choose Weather Card to Play.</div>';
+
+					if(searchRain){
+						weatherDiv+='<img class="played-card selected" src="./cards/rain.png">';
+					} else if(searchFog){
+						weatherDiv+='<img class="played-card selected" src="./cards/fog.jpg">';
+					} else if(searchFrost){
+						weatherDiv+='<img class="played-card selected" src="./cards/frost.png">';
+					} else if(searchClear){
+						weatherDiv+='<img class="played-card selected" src="./cards/cleanweather.png">';
+					};
 				};
+
+				$('#gwent-board').append(weatherDiv+'</div>')
 
 			};
 		
 			$('#p2leader').addClass('fade');
+		};
+
+		function searchDeckForCard(deck, indicator){
+			var cardFound = false;
+			for (var i = 0; i < deck.length; i++) {
+				if(deck[i].spec == indicator){
+					cardFound = true;
+				};
+			};
+
+			if(cardFound){
+				return i;
+			} else {
+				return false;
+			};
 		};
 
 		var nurse;

@@ -24,7 +24,7 @@
 
 	MongoClient.connect(url, function(err, db) {
 		if (err) throw err;
-		console.log("Database created!");
+		console.log("Database connected!");
 		//console.log(db.collection);
 		rdb = db.db("heroku_mr7v19f4");
 	});
